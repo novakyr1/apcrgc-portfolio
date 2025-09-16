@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APCRGC Personal Hub</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+
+  .container {
+    text-align: center;
+    background: #fff;
+    padding: 60px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 700px;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #222;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    color: #555;
+  }
+
+  .quick-links {
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #6c63ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.3s;
+    margin: 5px;
+  }
+
+  .btn:hover {
+    background: #5751d4;
+    transform: translateY(-3px);
+  }
+
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 200px;
+    text-align: center;
+  }
+
+  .card h3 {
+    margin-bottom: 10px;
+    color: #222;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  @media(max-width: 500px){
+    .container {
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .btn {
+      padding: 12px 25px;
+    }
+    .card {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header Section -->
+  <header class="header">
+    <h1>Welcome to My APCRGC Hub</h1>
+    <p>This is your personal college directory. Access your portfolio, projects, and resources easily.</p>
+  </header>
+
+  <!-- Quick Links Section -->
+  <section class="quick-links">
+    <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">Open Portfolio</a>
+  </section>
+
+  <!-- Dynamic Content Section -->
+
+<section class="content">
+  <!-- Card 1: Official Physics Dept Website -->
+  <div class="card">
+    <h3>Official Physics Dept</h3>
+    <p>APCRGC Physics Department</p>
+    <a href="https://sites.google.com/apcrgc.org/apcrgcphysics/home?authuser=0" class="btn" target="_blank">Visit</a>
+  </div>
+
+  <!-- Card 2: Semester I to VI Physics PYQ's -->
+  <div class="card">
+    <h3>Semester I to VI</h3>
+    <p>Physics PYQ's</p>
+    <a href="Physics-Pyq's.html" class="btn" target="_blank">Open</a>
+  </div>
+
+  <!-- Card 3: Mathematics -->
+  <div class="card">
+    <h3>Mathematics</h3>
+    <p>Profanup by Teacher</p>
+    <a href="https://profanup.netlify.app" class="btn" target="_blank">Open</a>
+  </div>
+</section>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics QR Hub</title>
+<style>
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+        text-align: center;
+        font-size: 2.5rem;
+        color: #222;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 900px;
+        width: 100%;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .card a {
+        color: #222;
+        text-decoration: none;
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .card a:hover {
+        color: #555;
+    }
+
+    @media(max-width: 800px){
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .card img {
+            width: 130px;
+            height: 130px;
+        }
+    }
+
+    @media(max-width: 500px){
+        .grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .card img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<h1>Physics QR Hub</h1>
+
+<div class="grid">
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/1Jmx1SOhMKyv8aLzGjn_9CX7eCQA7EfcY?usp=drive_link" alt="Semester 1">
+        <a href="https://drive.google.com/drive/folders/1Jmx1SOhMKyv8aLzGjn_9CX7eCQA7EfcY?usp=drive_link" target="_blank">Semester 1</a>
+    </div>
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/1m3i07oWi81RCFO0bx8NeZ9vKb30A33Af?usp=drive_link" alt="Semester 2">
+        <a href="https://drive.google.com/drive/folders/1m3i07oWi81RCFO0bx8NeZ9vKb30A33Af?usp=drive_link" target="_blank">Semester 2</a>
+    </div>
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/1CaOzMAEInZuGLYl3BlCSIp6S0PbhLA5w?usp=drive_link" alt="Semester 3">
+        <a href="https://drive.google.com/drive/folders/1CaOzMAEInZuGLYl3BlCSIp6S0PbhLA5w?usp=drive_link" target="_blank">Semester 3</a>
+    </div>
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/1WOtzTc42h-glRXlpOZItvkcgRML3JAbH?usp=drive_link" alt="Semester 4">
+        <a href="https://drive.google.com/drive/folders/1WOtzTc42h-glRXlpOZItvkcgRML3JAbH?usp=drive_link" target="_blank">Semester 4</a>
+    </div>
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/18pInB1d36bEvitsz8o9Bi6D1XnqMm-L_?usp=drive_link" alt="Semester 5">
+        <a href="https://drive.google.com/drive/folders/18pInB1d36bEvitsz8o9Bi6D1XnqMm-L_?usp=drive_link" target="_blank">Semester 5</a>
+    </div>
+    <div class="card">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/1YqADQqzSYX3He9U-iahlO4oRb7ubQHb2?usp=drive_link" alt="Semester 6">
+        <a href="https://drive.google.com/drive/folders/1YqADQqzSYX3He9U-iahlO4oRb7ubQHb2?usp=drive_link" target="_blank">Semester 6</a>
+    </div>
+</div>
+
+</body>
+</html>
