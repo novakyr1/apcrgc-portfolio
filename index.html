@@ -21,9 +21,9 @@
       --text: #444;
       --text-light: #666;
       --background: linear-gradient(135deg, #f8f4ff, #fff4f9);
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -41,50 +41,36 @@
       min-height: 100vh;
       color: var(--text);
       padding: 20px;
-      position: relative;
       overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    /* Decorative elements */
     .bubble {
       position: absolute;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
-      opacity: 0.5;
+      opacity: 0.3;
       z-index: -1;
-      animation: float 8s infinite ease-in-out;
+      animation: float 15s infinite ease-in-out alternate;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(10deg); }
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, -20px) rotate(5deg); }
+      100% { transform: translate(-10px, 0) rotate(-5deg); }
     }
 
     .container {
       text-align: center;
       background: var(--card-bg);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(15px);
       padding: 50px 35px;
       border-radius: 30px;
       box-shadow: var(--shadow);
       max-width: 800px;
       width: 100%;
       position: relative;
-      overflow: hidden;
       transition: var(--transition);
-    }
-
-    .container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, var(--primary-light) 0%, transparent 60%);
-      opacity: 0.1;
-      transform: rotate(30deg);
-      z-index: -1;
     }
 
     .header {
@@ -93,11 +79,11 @@
 
     h1 {
       font-family: 'Quicksand', sans-serif;
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       margin-bottom: 15px;
       color: var(--primary);
       font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     p {
@@ -120,62 +106,46 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 16px 30px;
+      padding: 14px 28px;
       background: var(--primary);
       color: white;
       text-decoration: none;
-      border-radius: 50px;
+      border-radius: 40px;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: 0 5px 15px rgba(162, 155, 254, 0.3);
+      box-shadow: 0 4px 12px rgba(162, 155, 254, 0.2);
       transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: 0.5s;
     }
 
     .btn:hover {
       background: #6c5ce7;
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
-    }
-
-    .btn:hover::before {
-      left: 100%;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(108, 92, 231, 0.3);
     }
 
     .btn-secondary {
       background: var(--secondary);
-      box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3);
+      box-shadow: 0 4px 12px rgba(253, 121, 168, 0.2);
     }
 
     .btn-secondary:hover {
       background: #e84393;
-      box-shadow: 0 8px 20px rgba(232, 67, 147, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(232, 67, 147, 0.3);
     }
 
     .content {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
+      gap: 20px;
       margin-bottom: 30px;
     }
 
     .card {
       background: var(--card-bg);
-      padding: 25px;
+      padding: 20px;
       border-radius: 25px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow);
       transition: var(--transition);
       position: relative;
       overflow: hidden;
@@ -193,54 +163,53 @@
       width: 5px;
       height: 100%;
       background: linear-gradient(to bottom, var(--primary), var(--secondary));
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
 
     .card-icon {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       background: var(--primary-light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: var(--primary);
-      font-size: 28px;
-      box-shadow: 0 5px 15px rgba(162, 155, 254, 0.2);
+      font-size: 26px;
+      box-shadow: 0 4px 10px rgba(162, 155, 254, 0.1);
     }
 
     .card h3 {
       font-family: 'Quicksand', sans-serif;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       color: var(--primary);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .card p {
       font-size: 0.95rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: var(--text-light);
     }
 
     .card .btn {
-      padding: 10px 22px;
+      padding: 8px 20px;
       font-size: 0.9rem;
-      margin-top: auto;
     }
 
     footer {
-      margin-top: 30px;
+      margin-top: 20px;
       color: var(--text-light);
       font-size: 0.9rem;
     }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
       .content {
         grid-template-columns: 1fr;
@@ -253,18 +222,18 @@
       
       .quick-links .btn {
         width: 100%;
-        max-width: 280px;
+        max-width: 260px;
       }
     }
 
     @media (max-width: 480px) {
       .container {
-        padding: 35px 25px;
+        padding: 30px 20px;
         border-radius: 20px;
       }
       
       h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       
       p {
@@ -272,7 +241,7 @@
       }
       
       .btn {
-        padding: 14px 25px;
+        padding: 12px 22px;
       }
     }
   </style>
@@ -285,13 +254,11 @@
   <div class="bubble" style="width: 80px; height: 80px; top: 20%; right: 15%; animation-delay: 3s;"></div>
 
   <div class="container">
-    <!-- Header Section -->
     <header class="header">
       <h1>Welcome to My APCRGC Hub</h1>
       <p>Your personal college directory with quick access to portfolios, projects, and educational resources.</p>
     </header>
 
-    <!-- Quick Links Section -->
     <section class="quick-links">
       <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">
         <i class="fas fa-user-circle"></i> Portfolio - Physics
@@ -301,9 +268,7 @@
       </a>
     </section>
 
-    <!-- Dynamic Content Section -->
     <section class="content">
-      <!-- Card 1: Official Physics Dept Website -->
       <div class="card">
         <div class="card-icon">
           <i class="fas fa-atom"></i>
@@ -315,7 +280,6 @@
         </a>
       </div>
 
-      <!-- Card 2: Semester I to VI Physics PYQ's -->
       <div class="card">
         <div class="card-icon">
           <i class="fas fa-book-open"></i>
@@ -327,7 +291,6 @@
         </a>
       </div>
 
-      <!-- Card 3: Mathematics -->
       <div class="card">
         <div class="card-icon">
           <i class="fas fa-calculator"></i>
@@ -346,7 +309,6 @@
   </div>
 
   <script>
-    // Create more floating bubbles
     document.addEventListener('DOMContentLoaded', function() {
       const body = document.querySelector('body');
       for (let i = 0; i < 5; i++) {
@@ -358,7 +320,7 @@
         bubble.style.top = `${Math.random() * 100}%`;
         bubble.style.left = `${Math.random() * 100}%`;
         bubble.style.animationDelay = `${Math.random() * 5}s`;
-        bubble.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        bubble.style.animationDuration = `${Math.random() * 15 + 10}s`;
         body.appendChild(bubble);
       }
     });
