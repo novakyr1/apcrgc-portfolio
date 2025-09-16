@@ -1,150 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APCRGC Personal Hub</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background: #f5f7fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>APCRGC Personal Hub</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  .container {
-    text-align: center;
-    background: #fff;
-    padding: 60px 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    max-width: 700px;
-    width: 100%;
-  }
+  <style>
+    :root {
+      --primary: #a29bfe;
+      --primary-light: #d6d4ff;
+      --secondary: #fd79a8;
+      --secondary-light: #ffd6e5;
+      --accent: #74b9ff;
+      --accent-light: #d6eaff;
+      --text: #444;
+      --text-light: #666;
+      --background: linear-gradient(135deg, #f8f4ff, #fff4f9);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #222;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  p {
-    font-size: 1rem;
-    margin-bottom: 40px;
-    color: #555;
-  }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: var(--text);
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-  .quick-links {
-    margin-bottom: 40px;
-  }
+    /* Decorative elements */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+      opacity: 0.5;
+      z-index: -1;
+      animation: float 8s infinite ease-in-out;
+    }
 
-  .btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background: #6c63ff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: bold;
-    transition: background 0.3s, transform 0.3s;
-    margin: 5px;
-  }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
 
-  .btn:hover {
-    background: #5751d4;
-    transform: translateY(-3px);
-  }
-
-  .content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .card {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 200px;
-    text-align: center;
-  }
-
-  .card h3 {
-    margin-bottom: 10px;
-    color: #222;
-  }
-
-  .card p {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 15px;
-  }
-
-  @media(max-width: 500px){
     .container {
-      padding: 40px 20px;
-    }
-    h1 {
-      font-size: 2rem;
-    }
-    .btn {
-      padding: 12px 25px;
-    }
-    .card {
+      text-align: center;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 50px 35px;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      max-width: 800px;
       width: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
     }
-  }
-</style>
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--primary-light) 0%, transparent 60%);
+      opacity: 0.1;
+      transform: rotate(30deg);
+      z-index: -1;
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 35px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 30px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 5px 15px rgba(162, 155, 254, 0.3);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover {
+      background: #6c5ce7;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: #e84393;
+      box-shadow: 0 8px 20px rgba(232, 67, 147, 0.4);
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      opacity: 0.7;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-size: 28px;
+      box-shadow: 0 5px 15px rgba(162, 155, 254, 0.2);
+    }
+
+    .card h3 {
+      font-family: 'Quicksand', sans-serif;
+      margin-bottom: 12px;
+      color: var(--primary);
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      color: var(--text-light);
+    }
+
+    .card .btn {
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    footer {
+      margin-top: 30px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      
+      .quick-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .quick-links .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 35px 25px;
+        border-radius: 20px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 14px 25px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Decorative bubbles -->
+  <div class="bubble" style="width: 150px; height: 150px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="bubble" style="width: 100px; height: 100px; top: 70%; right: 8%; animation-delay: 1s;"></div>
+  <div class="bubble" style="width: 120px; height: 120px; bottom: 10%; left: 10%; animation-delay: 2s;"></div>
+  <div class="bubble" style="width: 80px; height: 80px; top: 20%; right: 15%; animation-delay: 3s;"></div>
 
-<div class="container">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Welcome to My APCRGC Hub</h1>
+      <p>Your personal college directory with quick access to portfolios, projects, and educational resources.</p>
+    </header>
 
-  <!-- Header Section -->
-  <header class="header">
-    <h1>Welcome to My APCRGC Hub</h1>
-    <p>This is your personal college directory. Access your portfolio, projects, and resources easily.</p>
-  </header>
+    <!-- Quick Links Section -->
+    <section class="quick-links">
+      <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">
+        <i class="fas fa-user-circle"></i> Portfolio - Physics
+      </a>
+      <a href="https://profanup.netlify.app/semesters/attendance.html" class="btn btn-secondary" target="_blank">
+        <i class="fas fa-chart-line"></i> Portfolio - Mathematics
+      </a>
+    </section>
 
-  <!-- Quick Links Section -->
-  <section class="quick-links">
-    <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">Open Portfolio</a>
-  </section>
+    <!-- Dynamic Content Section -->
+    <section class="content">
+      <!-- Card 1: Official Physics Dept Website -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-atom"></i>
+        </div>
+        <h3>Physics Department</h3>
+        <p>Official website of APCRGC Physics Department with resources and information.</p>
+        <a href="https://sites.google.com/apcrgc.org/apcrgcphysics/home?authuser=0" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Visit
+        </a>
+      </div>
 
-  <!-- Dynamic Content Section -->
+      <!-- Card 2: Semester I to VI Physics PYQ's -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <h3>Physics PYQ's</h3>
+        <p>Previous year question papers for Semester I to VI Physics courses.</p>
+        <a href="Physics-Pyq's.html" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Open
+        </a>
+      </div>
 
-<section class="content">
-  <!-- Card 1: Official Physics Dept Website -->
-  <div class="card">
-    <h3>Official Physics Dept</h3>
-    <p>APCRGC Physics Department</p>
-    <a href="https://sites.google.com/apcrgc.org/apcrgcphysics/home?authuser=0" class="btn" target="_blank">Visit</a>
+      <!-- Card 3: Mathematics -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <h3>Mathematics</h3>
+        <p>Profanup mathematics resources by teacher with attendance tracking.</p>
+        <a href="https://profanup.netlify.app" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Open Present
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>APCRGC Personal Hub • Designed with ❤️</p>
+    </footer>
   </div>
 
-  <!-- Card 2: Semester I to VI Physics PYQ's -->
-  <div class="card">
-    <h3>Semester I to VI</h3>
-    <p>Physics PYQ's</p>
-    <a href="Physics-Pyq's.html" class="btn" target="_blank">Open</a>
-  </div>
-
-  <!-- Card 3: Mathematics -->
-  <div class="card">
-    <h3>Mathematics</h3>
-    <p>Profanup by Teacher</p>
-    <a href="https://profanup.netlify.app" class="btn" target="_blank">Open</a>
-  </div>
-</section>
-
-
-</div>
-
+  <script>
+    // Create more floating bubbles
+    document.addEventListener('DOMContentLoaded', function() {
+      const body = document.querySelector('body');
+      for (let i = 0; i < 5; i++) {
+        const size = Math.random() * 60 + 40;
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.top = `${Math.random() * 100}%`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.animationDelay = `${Math.random() * 5}s`;
+        bubble.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        body.appendChild(bubble);
+      }
+    });
+  </script>
 </body>
 </html>
