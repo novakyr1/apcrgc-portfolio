@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>APCRGC Personal Hub</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #a29bfe;
+      --primary-light: #d6d4ff;
+      --secondary: #fd79a8;
+      --secondary-light: #ffd6e5;
+      --accent: #74b9ff;
+      --accent-light: #d6eaff;
+      --text: #444;
+      --text-light: #666;
+      --background: linear-gradient(135deg, #f8f4ff, #fff4f9);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 30px;
+      padding: 50px 35px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before,
+    .container::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    }
+
+    .container::before {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      left: 5%;
+    }
+
+    .container::after {
+      width: 100px;
+      height: 100px;
+      bottom: 10%;
+      right: 8%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 2.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(162, 155, 254, 0.2);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn:hover {
+      background: #6c5ce7;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(108, 92, 231, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      box-shadow: 0 4px 12px rgba(253, 121, 168, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: #e84393;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(232, 67, 147, 0.3);
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      opacity: 0.6;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 26px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(162, 155, 254, 0.1);
+    }
+
+    .card h3 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      .quick-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      .quick-links .btn {
+        width: 100%;
+        max-width: 260px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+        border-radius: 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .btn {
+        padding: 12px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Welcome to My APCRGC Hub</h1>
+      <p>Your personal college directory with quick access to portfolios, projects, and educational resources.</p>
+    </header>
+
+    <section class="quick-links">
+      <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">
+        <i class="fas fa-user-circle"></i> Portfolio - Physics
+      </a>
+      <a href="https://profanup.netlify.app/semesters/attendance.html" class="btn btn-secondary" target="_blank">
+        <i class="fas fa-chart-line"></i> Portfolio - Mathematics
+      </a>
+    </section>
+
+    <section class="content">
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-atom"></i>
+        </div>
+        <h3>Physics Department</h3>
+        <p>Official website of APCRGC Physics Department with resources and information.</p>
+        <a href="https://sites.google.com/apcrgc.org/apcrgcphysics/home?authuser=0" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Visit
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <h3>Physics PYQ's</h3>
+        <p>Previous year question papers for Semester I to VI Physics courses.</p>
+        <a href="Physics-Pyq's.html" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Open
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <h3>Mathematics</h3>
+        <p>Profanup mathematics resources by teacher with attendance tracking.</p>
+        <a href="https://profanup.netlify.app" class="btn" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Open Present
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>APCRGC Personal Hub • Designed with ❤️</p>
+    </footer>
+  </div>
+</body>
+</html>
