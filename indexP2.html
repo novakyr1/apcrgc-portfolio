@@ -25,9 +25,6 @@
   --card-bg: rgba(255, 255, 255, 0.95);
   --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   --transition: all 0.3s ease;
-  --pdf-bg: #fff9f5;
-  --pdf-hover: #fff2e8;
-  --pdf-text: #333;
 }
 
 * {
@@ -55,23 +52,37 @@ body {
 .sidebar {
   position: fixed;
   top: 0;
-  left: -300px;
-  width: 300px;
+  left: -250px;
+  width: 250px;
   height: 100%;
-  background: var(--primary);
+  background: #6c5ce7;
   color: #fff;
-  padding: 25px;
+  padding: 20px;
   transition: left 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
   overflow-y: auto;
   z-index: 1000;
-  border-radius: 0 20px 20px 0;
 }
 
 .sidebar h2 {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 1.6rem;
-  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 16px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a:hover {
+  background: #a29bfe;
+  color: #2d3436;
 }
 
 .sidebar label {
@@ -79,52 +90,11 @@ body {
   text-align: right;
   font-size: 1.2rem;
   cursor: pointer;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 #sidebar-toggle:checked ~ .sidebar {
   left: 0;
-}
-
-/* PDF Items */
-.pdf-item {
-  margin-bottom: 20px;
-  background: var(--pdf-bg);
-  padding: 15px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.3s;
-}
-
-.pdf-item:hover {
-  background: var(--pdf-hover);
-}
-
-.pdf-title {
-  font-weight: 500;
-  font-size: 1rem;
-  color: var(--pdf-text);
-}
-
-.pdf-buttons a {
-  margin-left: 8px;
-  text-decoration: none;
-  color: var(--pdf-text);
-  background: var(--pdf-bg);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: 0.3s;
-}
-
-.pdf-buttons a:hover {
-  background: var(--pdf-hover);
-  color: #000;
 }
 
 /* Main container */
@@ -336,38 +306,22 @@ footer {
   <!-- Sidebar Toggle -->
   <input type="checkbox" id="sidebar-toggle">
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <label for="sidebar-toggle"><i class="fas fa-times"></i> Close</label>
-  <h2>Class Routine</h2>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <label for="sidebar-toggle"><i class="fas fa-times"></i> Close</label>
 
-  <!-- Physics -->
-  <div class="pdf-item">
-    <span class="pdf-title">Physics Routine</span>
-    <div class="pdf-buttons">
-      <a href="routine/Physics_Routine_July-Dec_2025.pdf" target="_blank">
-        <i class="fas fa-eye"></i> View
-      </a>
-      <a href="routine/Physics_Routine_July-Dec_2025.pdf" download>
-        <i class="fas fa-download"></i> Download
-      </a>
-    </div>
+
+<h2>Class Routine</h2>
+<a href="routine/Physics_Routine_July-Dec_2025.pdf" target="_blank">
+  <i class="fas fa-file-pdf"></i> Physics Routine
+</a>
+<a href="https://atharv-24git.github.io/apcrgc-portfolio/routine/Maths_Routine_July-Dec_2025.pdf" target="_blank">
+  <i class="fas fa-file-pdf"></i> Maths Routine
+</a>
+
+
   </div>
 
-  <!-- Maths -->
-  <div class="pdf-item">
-    <span class="pdf-title">Maths Routine</span>
-    <div class="pdf-buttons">
-      <a href="https://atharv-24git.github.io/apcrgc-portfolio/routine/Maths_Routine_July-Dec_2025.pdf" target="_blank">
-        <i class="fas fa-eye"></i> View
-      </a>
-      <a href="https://atharv-24git.github.io/apcrgc-portfolio/routine/Maths_Routine_July-Dec_2025.pdf" download>
-        <i class="fas fa-download"></i> Download
-      </a>
-    </div>
-  </div>
-
-</div>
   <!-- Main Container -->
   <div class="container">
     <div class="header">
