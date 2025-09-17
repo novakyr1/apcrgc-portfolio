@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>APCRGC Personal Hub</title>
-  
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -21,9 +22,9 @@
       --text: #444;
       --text-light: #666;
       --background: linear-gradient(135deg, #f8f4ff, #fff4f9);
-      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-bg: rgba(255, 255, 255, 0.95);
       --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.3s ease;
     }
 
     * {
@@ -35,61 +36,65 @@
     body {
       font-family: 'Poppins', sans-serif;
       background: var(--background);
+      color: var(--text);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: var(--text);
       padding: 20px;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
-    .bubble {
-      position: absolute;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
-      opacity: 0.3;
-      z-index: -1;
-      animation: float 15s infinite ease-in-out alternate;
-    }
-
-    @keyframes float {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(10px, -20px) rotate(5deg); }
-      100% { transform: translate(-10px, 0) rotate(-5deg); }
     }
 
     .container {
-      text-align: center;
-      background: var(--card-bg);
-      backdrop-filter: blur(15px);
-      padding: 50px 35px;
-      border-radius: 30px;
-      box-shadow: var(--shadow);
+      position: relative;
       max-width: 800px;
       width: 100%;
-      position: relative;
-      transition: var(--transition);
+      background: var(--card-bg);
+      border-radius: 30px;
+      padding: 50px 35px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before,
+    .container::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    }
+
+    .container::before {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      left: 5%;
+    }
+
+    .container::after {
+      width: 100px;
+      height: 100px;
+      bottom: 10%;
+      right: 8%;
     }
 
     .header {
+      text-align: center;
       margin-bottom: 30px;
     }
 
     h1 {
       font-family: 'Quicksand', sans-serif;
-      font-size: 2.6rem;
-      margin-bottom: 15px;
+      font-size: 2.5rem;
       color: var(--primary);
       font-weight: 700;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+      margin-bottom: 15px;
     }
 
     p {
-      font-size: 1.1rem;
-      margin-bottom: 35px;
       color: var(--text-light);
+      font-size: 1.1rem;
       line-height: 1.6;
     }
 
@@ -102,19 +107,18 @@
     }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
       padding: 14px 28px;
-      background: var(--primary);
-      color: white;
-      text-decoration: none;
       border-radius: 40px;
+      text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(162, 155, 254, 0.2);
       transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(162, 155, 254, 0.2);
+      background: var(--primary);
+      color: #fff;
     }
 
     .btn:hover {
@@ -143,20 +147,21 @@
 
     .card {
       background: var(--card-bg);
-      padding: 20px;
       border-radius: 25px;
+      padding: 20px;
       box-shadow: var(--shadow);
       transition: var(--transition);
       position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
     }
 
+    .card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
     .card::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -164,11 +169,6 @@
       height: 100%;
       background: linear-gradient(to bottom, var(--primary), var(--secondary));
       opacity: 0.6;
-    }
-
-    .card:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     }
 
     .card-icon {
@@ -179,47 +179,39 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 15px;
       color: var(--primary);
       font-size: 26px;
+      margin-bottom: 15px;
       box-shadow: 0 4px 10px rgba(162, 155, 254, 0.1);
     }
 
     .card h3 {
       font-family: 'Quicksand', sans-serif;
-      margin-bottom: 10px;
-      color: var(--primary);
       font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 10px;
     }
 
     .card p {
       font-size: 0.95rem;
-      margin-bottom: 15px;
       color: var(--text-light);
-    }
-
-    .card .btn {
-      padding: 8px 20px;
-      font-size: 0.9rem;
+      margin-bottom: 15px;
     }
 
     footer {
-      margin-top: 20px;
+      text-align: center;
       color: var(--text-light);
       font-size: 0.9rem;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .content {
         grid-template-columns: 1fr;
       }
-      
       .quick-links {
         flex-direction: column;
         align-items: center;
       }
-      
       .quick-links .btn {
         width: 100%;
         max-width: 260px;
@@ -231,15 +223,12 @@
         padding: 30px 20px;
         border-radius: 20px;
       }
-      
       h1 {
         font-size: 2rem;
       }
-      
       p {
         font-size: 1rem;
       }
-      
       .btn {
         padding: 12px 22px;
       }
@@ -247,12 +236,6 @@
   </style>
 </head>
 <body>
-  <!-- Decorative bubbles -->
-  <div class="bubble" style="width: 150px; height: 150px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-  <div class="bubble" style="width: 100px; height: 100px; top: 70%; right: 8%; animation-delay: 1s;"></div>
-  <div class="bubble" style="width: 120px; height: 120px; bottom: 10%; left: 10%; animation-delay: 2s;"></div>
-  <div class="bubble" style="width: 80px; height: 80px; top: 20%; right: 15%; animation-delay: 3s;"></div>
-
   <div class="container">
     <header class="header">
       <h1>Welcome to My APCRGC Hub</h1>
@@ -307,23 +290,5 @@
       <p>APCRGC Personal Hub • Designed with ❤️</p>
     </footer>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const body = document.querySelector('body');
-      for (let i = 0; i < 5; i++) {
-        const size = Math.random() * 60 + 40;
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.top = `${Math.random() * 100}%`;
-        bubble.style.left = `${Math.random() * 100}%`;
-        bubble.style.animationDelay = `${Math.random() * 5}s`;
-        bubble.style.animationDuration = `${Math.random() * 15 + 10}s`;
-        body.appendChild(bubble);
-      }
-    });
-  </script>
 </body>
 </html>
