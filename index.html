@@ -30,6 +30,7 @@
   --pdf-text: #333;
 }
 
+/* Reset & Body */
 * {
   margin: 0;
   padding: 0;
@@ -48,9 +49,7 @@ body {
 }
 
 /* Sidebar */
-#sidebar-toggle {
-  display: none;
-}
+#sidebar-toggle { display: none; }
 
 .sidebar {
   position: fixed;
@@ -98,17 +97,10 @@ body {
   transition: 0.3s;
 }
 
-.pdf-item:hover {
-  background: var(--pdf-hover);
-}
+.pdf-item:hover { background: var(--pdf-hover); }
 
-.pdf-item.telegram {
-  border-left: 5px solid #0088cc;
-}
-
-.pdf-item.telegram:hover {
-  background: #e6f7ff;
-}
+.pdf-item.telegram { border-left: 5px solid #0088cc; }
+.pdf-item.telegram:hover { background: #e6f7ff; }
 
 .pdf-title {
   font-weight: 500;
@@ -135,7 +127,7 @@ body {
   color: #000;
 }
 
-/* Main container */
+/* Main Container */
 .container {
   max-width: 800px;
   width: 100%;
@@ -156,24 +148,10 @@ body {
   background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
 }
 
-.container::before {
-  width: 150px;
-  height: 150px;
-  top: 10%;
-  left: 5%;
-}
+.container::before { width: 150px; height: 150px; top: 10%; left: 5%; }
+.container::after { width: 100px; height: 100px; bottom: 10%; right: 8%; }
 
-.container::after {
-  width: 100px;
-  height: 100px;
-  bottom: 10%;
-  right: 8%;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 30px;
-}
+.header { text-align: center; margin-bottom: 30px; }
 
 h1 {
   font-family: 'Quicksand', sans-serif;
@@ -184,18 +162,11 @@ h1 {
   margin-bottom: 15px;
 }
 
-h1 span {
-  color: var(--secondary);
-  cursor: pointer;
-  text-decoration: underline;
-}
+h1 span { color: var(--secondary); cursor: pointer; text-decoration: underline; }
 
-p {
-  color: var(--text-light);
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
+p { color: var(--text-light); font-size: 1.1rem; line-height: 1.6; }
 
+/* Buttons & Links */
 .quick-links {
   display: flex;
   justify-content: center;
@@ -236,6 +207,7 @@ p {
   box-shadow: 0 6px 18px rgba(232, 67, 147, 0.3);
 }
 
+/* Grid Content & Cards */
 .content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -290,52 +262,168 @@ p {
   margin-bottom: 10px;
 }
 
-.card p {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  margin-bottom: 15px;
-}
+.card p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 15px; }
 
-footer {
-  text-align: center;
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
+/* Footer */
+footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
 
+/* Responsive */
 @media (max-width: 768px) {
-  .content {
-    grid-template-columns: 1fr;
-  }
-  .quick-links {
-    flex-direction: column;
-    align-items: center;
-  }
-  .quick-links .btn {
-    width: 100%;
-    max-width: 260px;
-  }
+  .content { grid-template-columns: 1fr; }
+  .quick-links { flex-direction: column; align-items: center; }
+  .quick-links .btn { width: 100%; max-width: 260px; }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 30px 20px;
-    border-radius: 20px;
-  }
-  h1 {
-    font-size: 2rem;
-  }
-  p {
-    font-size: 1rem;
-  }
-  .btn {
-    padding: 12px 22px;
-  }
-  .card-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
-    margin-bottom: 15px;
-  }
+  .container { padding: 30px 20px; border-radius: 20px; }
+  h1 { font-size: 2rem; }
+  p { font-size: 1rem; }
+  .btn { padding: 12px 22px; }
+  .card-icon { width: 60px; height: 60px; font-size: 24px; margin-bottom: 15px; }
+}
+
+/* --- Professional Routine Box --- */
+.routine-box {
+  width: 90%;
+  max-width: 480px;          
+  background: #ffffff; /* Pure white background */
+  border-radius: 22px;       
+  padding: 28px 25px;        
+  cursor: pointer;
+  transition: all 0.35s ease-in-out;
+  margin: 20px auto;         
+
+}
+
+.routine-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12); 
+}
+
+.routine-box h2 {
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 12px;
+  color: #1e293b;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.clock {
+  text-align: center;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #059669;
+}
+
+.day-title {
+  font-size: 18px;
+  text-align: center;
+  color: #2563eb;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.class-slot {
+  background: #f8fafc; /* Very light gray background */
+  border: 1px solid #f1f5f9; /* Soft border */
+  border-radius: 14px;
+  padding: 13px;
+  margin-bottom: 11px;
+  text-align: left;
+  font-size: 15.5px;
+  color: #111827;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+.highlight {
+  background: #2563eb !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(37,99,235,0.35);
+}
+
+.highlight .subject, .highlight .time {
+  color: #fff !important;
+}
+
+.no-class {
+  text-align: center;
+  color: #059669;
+  background: #f0fdf4; /* Lighter green background */
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 14px;
+  border: 1px solid #dcfce7;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.modal h3 { text-align: center; margin-bottom: 15px; color: #1e293b; font-weight: 600; }
+.close-btn { float: right; font-size: 22px; font-weight: bold; cursor: pointer; color: #333; }
+
+.full-slot {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.full-slot .time { font-weight: 600; color: #374151; }
+.full-slot .subject { margin-left: 6px; color: #1e40af; }
+
+.teacher-link {
+  color: #1e40af;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.teacher-link:hover { color: #2563eb; text-decoration: underline; }
+.highlight .teacher-link { color: #fff !important; }
+.highlight .teacher-link:hover { color: #dbeafe !important; }
+
+/* Keyframes */
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+@keyframes slideUp { from {transform: translateY(30px);} to {transform: translateY(0);} }
+
+/* Routine Box Responsive */
+@media (max-width: 600px) {
+  .routine-box { padding: 22px 18px; border-radius: 18px; }
+  .routine-box h2 { font-size: 21px; }
+  .clock { font-size: 16.5px; }
+  .day-title { font-size: 16px; }
+  .class-slot { font-size: 14px; padding: 11px; }
 }
   </style>
 </head>
@@ -416,6 +504,30 @@ footer {
       </a>
     </div>
 
+
+
+
+
+
+
+  <div class="routine-box" onclick="openModal()">
+    <h2>📘 SEM 1 Routine</h2>
+    <div class="clock" id="clock">--:-- --</div>
+    <div class="day-title" id="dayTitle">Loading...</div>
+    <div id="currentClass">Please wait...</div>
+  </div>
+  
+  <!-- Modal -->
+  <div id="routineModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3 id="modalDay"></h3>
+      <div id="fullRoutine"></div>
+    </div>
+  </div>
+
+
+
     <div class="content">
       <div class="card">
         <div class="card-icon">
@@ -456,5 +568,201 @@ footer {
     </footer>
   </div>
 
+  <script>
+    // Teacher URLs mapping - each teacher has their own unique link
+const teacherURLs = {
+  "Dr. Md Hasanujjaman": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Koustuv Roy": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Supriya Chatterjee": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Mr. Ikbal Mandal": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Mr. Hirujit Ghosh": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Ms. Nilanjana Nandi": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Nivedita Chatterjee": "  "
+};
+
+    // Helper: Convert 24hr string (HH:MM) to 12hr format
+    function to12Hour(time) {
+      let [h, m] = time.split(":").map(Number);
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12;
+      h = h ? h : 12;
+      return `${h}:${m.toString().padStart(2,"0")} ${ampm}`;
+    }
+
+    // Process subject text to make teacher names clickable
+    function processSubjectText(text) {
+      // Create a copy of the text to work with
+      let processedText = text;
+      
+      // Replace each teacher name with a clickable link
+      Object.keys(teacherURLs).forEach(teacher => {
+        const regex = new RegExp(teacher, 'g');
+        processedText = processedText.replace(
+          regex, 
+          `<span class="teacher-link" onclick="event.stopPropagation(); window.open('${teacherURLs[teacher]}', '_blank')">${teacher}</span>`
+        );
+      });
+      
+      return processedText;
+    }
+
+    // SEM 1 full week routine with teacher names
+const routine = {
+  "MON": [
+    { start: "10:30", end: "11:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
+    { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "02:00", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "03:00", end: "04:00", subject: "SEC - Dr. Md Hasanujjaman" },
+    { start: "04:00", end: "05:00", subject: "SEC - Dr. Koustuv Roy" }
+  ],
+  "TUE": [
+    { start: "10:30", end: "11:30", subject: "MIN1 - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "MIN1 - Dr. Supriya Chatterjee" },
+    { start: "12:30", end: "01:30", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
+    { start: "02:00", end: "03:00", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
+    { start: "03:00", end: "04:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal" },
+    { start: "04:00", end: "05:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal & Dr. Md Hasanujjaman" }
+  ],
+  "WED": [
+    { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "11:30", end: "12:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "12:30", end: "01:30", subject: "MIN1 - Mr. Ikbal Mandal" },
+    { start: "01:30", end: "02:00", subject: "Recess Hour" },
+    { start: "02:00", end: "03:00", subject: "MAJ2 - Mr. Hirujit Ghosh" },
+    { start: "03:00", end: "04:00", subject: "No classes" },
+    { start: "04:00", end: "05:00", subject: "MAJ1 - Dr. Koustuv Roy" },
+  ],
+  "THU": [
+    { start: "10:30", end: "11:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
+    { start: "11:30", end: "12:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
+    { start: "12:30", end: "01:30", subject: "Recess Hour" },
+    { start: "02:00", end: "03:00", subject: "MAJ1 - Dr. Koustuv Roy" },
+    { start: "03:00", end: "04:00", subject: "MAJ2 - Dr. Supriya Chatterjee" },
+    { start: "04:00", end: "05:00", subject: "MAJ2 - Dr. Supriya Chatterjee" }
+  ],
+  "FRI": [
+    { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "11:30", end: "12:30", subject: "MAJ2 - Mr. Hirujit Ghosh" },
+    { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "02:20", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "03:00", end: "04:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" },
+    { start: "04:00", end: "05:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" }
+  ],
+  "SAT": [
+    { start: "10:30", end: "11:30", subject: "Remedial Class - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "Remedial Class - Mr. Ikbal Mandal" },
+    { start: "12:30", end: "01:30", subject: "Remedial Class - Mr. Hirujit Ghosh" },
+    { start: "02:00", end: "03:00", subject: "Tutorial - Ms. Nilanjana Nandi" }
+  ]
+};
+
+    function timeToMinutes(t) {
+      const [h, m] = t.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      document.getElementById("clock").textContent = `${hours}:${minutes} ${ampm}`;
+    }
+
+    function loadCurrentClass() {
+      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+      const now = new Date();
+      const today = dayNames[now.getDay()];
+      document.getElementById("dayTitle").textContent = today;
+
+      const todayRoutine = routine[today];
+      const container = document.getElementById("currentClass");
+      container.innerHTML = "";
+
+      if (!todayRoutine) {
+        container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
+        return;
+      }
+
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      let found = false;
+
+      todayRoutine.forEach(slot => {
+        if (currentMinutes >= timeToMinutes(slot.start) &&
+            currentMinutes < timeToMinutes(slot.end)) {
+          const div = document.createElement("div");
+          div.className = "class-slot highlight";
+          div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
+                           <span class="subject">${processSubjectText(slot.subject)}</span>`;
+          container.appendChild(div);
+          found = true;
+        }
+      });
+
+      if (!found) {
+        container.innerHTML = `<div class="no-class">✅ No class right now</div>`;
+      }
+    }
+
+function openModal() {
+  const now = new Date();
+  const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+  const today = dayNames[now.getDay()];
+  document.getElementById("modalDay").textContent = today + " - Full Routine";
+
+  const todayRoutine = routine[today];
+  const container = document.getElementById("fullRoutine");
+  container.innerHTML = "";
+
+  if (!todayRoutine || todayRoutine.length === 0) {
+    container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
+  } else {
+    todayRoutine.forEach(slot => {
+      const div = document.createElement("div");
+      div.className = "full-slot";
+      
+      // Handle 'No classes' or 'Recess Hour' specially
+      const subjectText = slot.subject.toLowerCase().includes("no class") || slot.subject.toLowerCase().includes("recess")
+                          ? slot.subject
+                          : processSubjectText(slot.subject);
+
+      div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
+                       <span class="subject">${subjectText}</span>`;
+      container.appendChild(div);
+    });
+  }
+
+  // Show modal
+  const modal = document.getElementById("routineModal");
+  modal.style.display = "flex";
+
+  // Prevent body scroll while modal is open
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  const modal = document.getElementById("routineModal");
+  modal.style.display = "none";
+  document.body.style.overflow = "auto"; // restore scroll
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById("routineModal");
+  if (event.target === modal) {
+    closeModal();
+  }
+}
+    // Run
+    updateClock();
+    loadCurrentClass();
+    setInterval(updateClock, 1000);
+    setInterval(loadCurrentClass, 60000);
+  </script>
 </body>
 </html>
+
+
