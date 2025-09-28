@@ -28,8 +28,6 @@
   --pdf-bg: #fff9f5;
   --pdf-hover: #fff2e8;
   --pdf-text: #333;
-  --holiday: #ff7675;
-  --holiday-light: #ffeaea;
 }
 
 /* Reset & Body */
@@ -291,19 +289,15 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
   background: #ffffff; /* Pure white background */
   border-radius: 22px;       
   padding: 28px 25px;        
-  cursor: pointer;
+  cursor: ;
   transition: all 0.35s ease-in-out;
   margin: 20px auto;         
+
 }
 
 .routine-box:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.12); 
-}
-
-.routine-box.holiday {
-  background: var(--holiday-light);
-  border: 2px solid var(--holiday);
 }
 
 .routine-box h2 {
@@ -313,10 +307,6 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
   color: #1e293b;
   font-weight: 700;
   letter-spacing: 0.5px;
-}
-
-.routine-box.holiday h2 {
-  color: var(--holiday);
 }
 
 .clock {
@@ -367,16 +357,6 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
   padding: 15px;
   border-radius: 14px;
   border: 1px solid #dcfce7;
-}
-
-.holiday-class {
-  text-align: center;
-  color: var(--holiday);
-  background: var(--holiday-light);
-  font-weight: 600;
-  padding: 15px;
-  border-radius: 14px;
-  border: 1px solid var(--holiday);
 }
 
 /* Modal */
@@ -524,21 +504,29 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
       </a>
     </div>
 
-    <div class="routine-box" id="routineBox" onclick="openModal()">
-      <h2>📘 SEM 1 Routine</h2>
-      <div class="clock" id="clock">--:-- --</div>
-      <div class="day-title" id="dayTitle">Loading...</div>
-      <div id="currentClass">Please wait...</div>
-    </div>
+
+
+
+
+
+
+  <div class="routine-box" onclick="openModal()">
+    <h2>📘 SEM 1 Routine</h2>
+    <div class="clock" id="clock">--:-- --</div>
+    <div class="day-title" id="dayTitle">Loading...</div>
+    <div id="currentClass">Please wait...</div>
+  </div>
   
-    <!-- Modal -->
-    <div id="routineModal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3 id="modalDay"></h3>
-        <div id="fullRoutine"></div>
-      </div>
+  <!-- Modal -->
+  <div id="routineModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3 id="modalDay"></h3>
+      <div id="fullRoutine"></div>
     </div>
+  </div>
+
+
 
     <div class="content">
       <div class="card">
@@ -582,111 +570,15 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
 
   <script>
     // Teacher URLs mapping - each teacher has their own unique link
-    const teacherURLs = {
-      "Dr. Md Hasanujjaman": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Koustuv Roy": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Supriya Chatterjee": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Ikbal Mandal": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Hirujit Ghosh": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Ms. Nilanjana Nandi": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Nivedita Chatterjee": "  "
-    };
-
-    // Holiday list for 2025 (from the PDF)
-    const holidays2025 = [
-      "01/01/2025", // New Year's Day
-      "14/01/2025", // Makar Sankranti
-      "23/01/2025", // Birthday of Netaji
-      "03/02/2025", // Day after Saraswati Puja
-      "14/02/2025", // Birthday of Thakur Panchanan Barma and Shab-e-Barat
-      "26/02/2025", // Maha Shivaratri
-      "14/03/2025", // Doljatra & Holi
-      "15/03/2025", // Day after Doljatra
-      "27/03/2025", // Birthday of Shri Shri Harichand Thakur
-      "31/03/2025", // Eid-ul-Fitar
-      "01/04/2025", // Day after Eid-ul-Fitar
-      "10/04/2025", // Mahavir Jayanti
-      "14/04/2025", // Birthday of Dr. B.R. Ambedkar
-      "15/04/2025", // Bengali New Year's Day
-      "18/04/2025", // Good Friday
-      "01/05/2025", // May Day
-      // Summer Vacation: 05/05/2025 to 27/06/2025 (46 days)
-      "27/06/2025", // Rathayatra
-      "21/07/2025", // College Foundation Day
-      "02/08/2025", // Birthday of Acharya Prafulla Chandra Roy
-      "09/08/2025", // Rakhi Bandhan
-      "15/08/2025", // Independence Day & Janmashtami
-      "05/09/2025", // Fateha-Dwaz-Daham
-      "17/09/2025", // Viswakarma Puja
-      // Puja Vacation: 22/09/2025 to 05/11/2025 (39 days)
-      // Winter Vacation: 25/12/2025 to 31/12/2025 (6 days)
-      "31/12/2025"  // Principal's Discretion
-    ];
-
-    // Add all summer vacation days
-    const addSummerVacationDays = () => {
-      const startDate = new Date("05/05/2025");
-      const endDate = new Date("06/27/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Add all puja vacation days
-    const addPujaVacationDays = () => {
-      const startDate = new Date("09/22/2025");
-      const endDate = new Date("11/05/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Add all winter vacation days
-    const addWinterVacationDays = () => {
-      const startDate = new Date("12/25/2025");
-      const endDate = new Date("12/31/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Format date as MM/DD/YYYY
-    const formatDate = (date) => {
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      const year = date.getFullYear();
-      return `${month}/${day}/${year}`;
-    };
-
-    // Initialize holiday list with vacation periods
-    addSummerVacationDays();
-    addPujaVacationDays();
-    addWinterVacationDays();
-
-    // Check if today is a holiday
-    const isHoliday = () => {
-      const today = new Date();
-      const todayString = formatDate(today);
-      return holidays2025.includes(todayString);
-    };
+const teacherURLs = {
+  "Dr. Md Hasanujjaman": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Koustuv Roy": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Supriya Chatterjee": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Mr. Ikbal Mandal": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Mr. Hirujit Ghosh": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Ms. Nilanjana Nandi": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
+  "Dr. Nivedita Chatterjee": "  "
+};
 
     // Helper: Convert 24hr string (HH:MM) to 12hr format
     function to12Hour(time) {
@@ -715,55 +607,55 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
     }
 
     // SEM 1 full week routine with teacher names
-    const routine = {
-      "MON": [
-        { start: "10:30", end: "11:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:00", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC - Dr. Md Hasanujjaman" },
-        { start: "04:00", end: "05:00", subject: "SEC - Dr. Koustuv Roy" }
-      ],
-      "TUE": [
-        { start: "10:30", end: "11:30", subject: "MIN1 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MIN1 - Dr. Supriya Chatterjee" },
-        { start: "12:30", end: "01:30", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "03:00", end: "04:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal & Dr. Md Hasanujjaman" }
-      ],
-      "WED": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "MIN1 - Mr. Ikbal Mandal" },
-        { start: "01:30", end: "02:00", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "03:00", end: "04:00", subject: "No classes" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-      ],
-      "THU": [
-        { start: "10:30", end: "11:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "11:30", end: "12:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-        { start: "03:00", end: "04:00", subject: "MAJ2 - Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "MAJ2 - Dr. Supriya Chatterjee" }
-      ],
-      "FRI": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:20", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" }
-      ],
-      "SAT": [
-        { start: "10:30", end: "11:30", subject: "Remedial Class - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "Remedial Class - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "Remedial Class - Mr. Hirujit Ghosh" },
-        { start: "02:00", end: "03:00", subject: "Tutorial - Ms. Nilanjana Nandi" }
-      ]
-    };
+const routine = {
+  "MON": [
+    { start: "10:30", end: "11:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
+    { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "02:00", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "03:00", end: "04:00", subject: "SEC - Dr. Md Hasanujjaman" },
+    { start: "04:00", end: "05:00", subject: "SEC - Dr. Koustuv Roy" }
+  ],
+  "TUE": [
+    { start: "10:30", end: "11:30", subject: "MIN1 - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "MIN1 - Dr. Supriya Chatterjee" },
+    { start: "12:30", end: "01:30", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
+    { start: "02:00", end: "03:00", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
+    { start: "03:00", end: "04:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal" },
+    { start: "04:00", end: "05:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal & Dr. Md Hasanujjaman" }
+  ],
+  "WED": [
+    { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "11:30", end: "12:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "12:30", end: "01:30", subject: "MIN1 - Mr. Ikbal Mandal" },
+    { start: "01:30", end: "02:00", subject: "Recess Hour" },
+    { start: "02:00", end: "03:00", subject: "MAJ2 - Mr. Hirujit Ghosh" },
+    { start: "03:00", end: "04:00", subject: "No classes" },
+    { start: "04:00", end: "05:00", subject: "MAJ1 - Dr. Koustuv Roy" },
+  ],
+  "THU": [
+    { start: "10:30", end: "11:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
+    { start: "11:30", end: "12:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
+    { start: "12:30", end: "01:30", subject: "Recess Hour" },
+    { start: "02:00", end: "03:00", subject: "MAJ1 - Dr. Koustuv Roy" },
+    { start: "03:00", end: "04:00", subject: "MAJ2 - Dr. Supriya Chatterjee" },
+    { start: "04:00", end: "05:00", subject: "MAJ2 - Dr. Supriya Chatterjee" }
+  ],
+  "FRI": [
+    { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
+    { start: "11:30", end: "12:30", subject: "MAJ2 - Mr. Hirujit Ghosh" },
+    { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "02:20", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
+    { start: "03:00", end: "04:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" },
+    { start: "04:00", end: "05:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" }
+  ],
+  "SAT": [
+    { start: "10:30", end: "11:30", subject: "Remedial Class - Dr. Md Hasanujjaman" },
+    { start: "11:30", end: "12:30", subject: "Remedial Class - Mr. Ikbal Mandal" },
+    { start: "12:30", end: "01:30", subject: "Remedial Class - Mr. Hirujit Ghosh" },
+    { start: "02:00", end: "03:00", subject: "Tutorial - Ms. Nilanjana Nandi" }
+  ]
+};
 
     function timeToMinutes(t) {
       const [h, m] = t.split(":").map(Number);
@@ -785,17 +677,6 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
       const now = new Date();
       const today = dayNames[now.getDay()];
       document.getElementById("dayTitle").textContent = today;
-
-      const routineBox = document.getElementById("routineBox");
-      
-      // Check if today is a holiday
-      if (isHoliday()) {
-        routineBox.classList.add("holiday");
-        document.getElementById("currentClass").innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes Today</div>`;
-        return;
-      } else {
-        routineBox.classList.remove("holiday");
-      }
 
       const todayRoutine = routine[today];
       const container = document.getElementById("currentClass");
@@ -826,68 +707,60 @@ footer { text-align: center; color: var(--text-light); font-size: 0.9rem; }
       }
     }
 
-    function openModal() {
-      const now = new Date();
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const today = dayNames[now.getDay()];
+function openModal() {
+  const now = new Date();
+  const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+  const today = dayNames[now.getDay()];
+  document.getElementById("modalDay").textContent = today + " - Full Routine";
+
+  const todayRoutine = routine[today];
+  const container = document.getElementById("fullRoutine");
+  container.innerHTML = "";
+
+  if (!todayRoutine || todayRoutine.length === 0) {
+    container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
+  } else {
+    todayRoutine.forEach(slot => {
+      const div = document.createElement("div");
+      div.className = "full-slot";
       
-      // Check if today is a holiday
-      if (isHoliday()) {
-        document.getElementById("modalDay").textContent = today + " - Holiday (No Classes)";
-        document.getElementById("fullRoutine").innerHTML = `<div class="holiday-class">🎉 Today is a holiday - No Classes Scheduled</div>`;
-      } else {
-        document.getElementById("modalDay").textContent = today + " - Full Routine";
+      // Handle 'No classes' or 'Recess Hour' specially
+      const subjectText = slot.subject.toLowerCase().includes("no class") || slot.subject.toLowerCase().includes("recess")
+                          ? slot.subject
+                          : processSubjectText(slot.subject);
 
-        const todayRoutine = routine[today];
-        const container = document.getElementById("fullRoutine");
-        container.innerHTML = "";
+      div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
+                       <span class="subject">${subjectText}</span>`;
+      container.appendChild(div);
+    });
+  }
 
-        if (!todayRoutine || todayRoutine.length === 0) {
-          container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
-        } else {
-          todayRoutine.forEach(slot => {
-            const div = document.createElement("div");
-            div.className = "full-slot";
-            
-            // Handle 'No classes' or 'Recess Hour' specially
-            const subjectText = slot.subject.toLowerCase().includes("no class") || slot.subject.toLowerCase().includes("recess")
-                                ? slot.subject
-                                : processSubjectText(slot.subject);
+  // Show modal
+  const modal = document.getElementById("routineModal");
+  modal.style.display = "flex";
 
-            div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
-                             <span class="subject">${subjectText}</span>`;
-            container.appendChild(div);
-          });
-        }
-      }
+  // Prevent body scroll while modal is open
+  document.body.style.overflow = "hidden";
+}
 
-      // Show modal
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "flex";
+function closeModal() {
+  const modal = document.getElementById("routineModal");
+  modal.style.display = "none";
+  document.body.style.overflow = "auto"; // restore scroll
+}
 
-      // Prevent body scroll while modal is open
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "none";
-      document.body.style.overflow = "auto"; // restore scroll
-    }
-
-    // Close modal when clicking outside content
-    window.onclick = function(event) {
-      const modal = document.getElementById("routineModal");
-      if (event.target === modal) {
-        closeModal();
-      }
-    }
-
-    // Initialize
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById("routineModal");
+  if (event.target === modal) {
+    closeModal();
+  }
+}
+    // Run
     updateClock();
     loadCurrentClass();
     setInterval(updateClock, 1000);
-    setInterval(loadCurrentClass, 30000); // Update every 30 seconds
+    setInterval(loadCurrentClass, 60000);
   </script>
 </body>
 </html>
