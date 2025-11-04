@@ -6,21 +6,25 @@
 <title>Physics QR Hub</title>
 <style>
     body {
+        /* Professional Light Blue/Gray Background */
         margin: 0;
         padding: 40px 20px;
         font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
+        background-color: #f0f5fa; 
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #333;
+        /* Primary Text Color - Deep Navy Blue */
+        color: #002147; 
     }
 
     h1 {
         margin-bottom: 40px;
         text-align: center;
         font-size: 2.5rem;
-        color: #222;
+        /* Heading Color - Darker Blue */
+        color: #002147; 
+        font-weight: 700;
     }
 
     .grid {
@@ -32,17 +36,21 @@
     }
 
     .card {
-        background: #fff;
+        /* Clean White Card Background */
+        background: #ffffff; 
         border-radius: 15px;
         padding: 20px;
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* Subtle Blue Shadow */
+        box-shadow: 0 4px 15px rgba(0, 33, 71, 0.1); 
         transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #e0e6ed; /* Slight Border for definition */
     }
 
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        /* Enhanced Shadow on Hover */
+        box-shadow: 0 8px 25px rgba(0, 33, 71, 0.2); 
     }
 
     .card img {
@@ -50,18 +58,23 @@
         height: 150px;
         margin-bottom: 15px;
         border-radius: 10px;
+        object-fit: contain;
     }
 
     .card a {
-        color: #222;
+        /* Link Color - Accent Blue */
+        color: #004d99; 
         text-decoration: none;
         font-weight: bold;
         display: block;
         margin-top: 10px;
+        font-size: 1.1rem;
     }
 
     .card a:hover {
-        color: #555;
+        /* Link Hover Color - Slightly Darker Blue */
+        color: #002147; 
+        text-decoration: underline;
     }
 
     @media(max-width: 800px){
