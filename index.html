@@ -545,16 +545,63 @@ footer .fa-heart {
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modal-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+}
+
+.nav-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn:disabled:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  transform: none;
+}
+
 .modal h3 { 
   font-family: 'Manrope', sans-serif;
   text-align: center; 
-  margin-bottom: 20px; 
+  margin-bottom: 0;
   color: var(--primary);
   font-weight: 600;
   font-size: 1.4rem;
+  flex-grow: 1;
 }
 .close-btn { 
-  float: right; 
   font-size: 28px;
   font-weight: 300;
   cursor: pointer; 
@@ -705,8 +752,18 @@ footer .fa-heart {
   
     <div id="routineModal" class="modal">
       <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3 id="modalDay"></h3>
+        <div class="modal-header">
+          <div class="modal-nav">
+            <button class="nav-btn" id="prevDayBtn" onclick="navigateDay(-1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn" id="nextDayBtn" onclick="navigateDay(1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+          <h3 id="modalDay"></h3>
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
         <div id="fullRoutine"></div>
       </div>
     </div>
@@ -941,6 +998,9 @@ footer .fa-heart {
       ]
     };
 
+    // Global variable to track current day in modal
+    let currentModalDay = "";
+
     function timeToMinutes(t) {
       const [h, m] = t.split(":").map(Number);
       return h * 60 + m;
@@ -1007,21 +1067,90 @@ footer .fa-heart {
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
       const today = dayNames[now.getDay()];
       
-      // Check if today is a holiday
-      if (isHoliday()) {
-        document.getElementById("modalDay").textContent = today + " - Holiday (No Classes)";
-        document.getElementById("fullRoutine").innerHTML = `<div class="holiday-class">🎉 Today is a holiday - No Classes Scheduled</div>`;
-      } else {
-        document.getElementById("modalDay").textContent = today + " - Full Routine";
+      // Set current modal day to today
+      currentModalDay = today;
+      
+      // Update navigation buttons
+      updateNavButtons();
+      
+      // Load routine for current day
+      loadRoutineForDay(today);
+      
+      // Show modal
+      const modal = document.getElementById("routineModal");
+      modal.style.display = "flex";
 
-        const todayRoutine = routine[today];
+      // Prevent body scroll while modal is open
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("routineModal");
+      modal.style.display = "none";
+      document.body.style.overflow = "auto"; // restore scroll
+    }
+
+    function navigateDay(direction) {
+      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+      const currentIndex = dayNames.indexOf(currentModalDay);
+      let newIndex = currentIndex + direction;
+      
+      // Handle wrap-around
+      if (newIndex < 0) newIndex = 6;
+      if (newIndex > 6) newIndex = 0;
+      
+      currentModalDay = dayNames[newIndex];
+      updateNavButtons();
+      loadRoutineForDay(currentModalDay);
+    }
+
+    function updateNavButtons() {
+      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+      const currentIndex = dayNames.indexOf(currentModalDay);
+      
+      // Update button states
+      document.getElementById("prevDayBtn").disabled = false;
+      document.getElementById("nextDayBtn").disabled = false;
+      
+      // You can add logic here to disable buttons if needed
+      // For example, if you don't want to navigate to Sunday
+      // if (currentIndex === 0) {
+      //   document.getElementById("prevDayBtn").disabled = true;
+      // }
+      // if (currentIndex === 6) {
+      //   document.getElementById("nextDayBtn").disabled = true;
+      // }
+    }
+
+    function loadRoutineForDay(day) {
+      // Check if the day is a holiday
+      const now = new Date();
+      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+      const todayIndex = dayNames.indexOf(day);
+      const currentIndex = dayNames.indexOf(dayNames[now.getDay()]);
+      
+      // Calculate date for the selected day
+      const dateDiff = todayIndex - currentIndex;
+      const selectedDate = new Date();
+      selectedDate.setDate(selectedDate.getDate() + dateDiff);
+      const selectedDateString = formatDate(selectedDate);
+      
+      const isDayHoliday = holidays2025.includes(selectedDateString);
+      
+      if (isDayHoliday) {
+        document.getElementById("modalDay").textContent = day + " - Holiday (No Classes)";
+        document.getElementById("fullRoutine").innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday - No Classes Scheduled</div>`;
+      } else {
+        document.getElementById("modalDay").textContent = day + " - Full Routine";
+
+        const dayRoutine = routine[day];
         const container = document.getElementById("fullRoutine");
         container.innerHTML = "";
 
-        if (!todayRoutine || todayRoutine.length === 0) {
+        if (!dayRoutine || dayRoutine.length === 0) {
           container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
         } else {
-          todayRoutine.forEach(slot => {
+          dayRoutine.forEach(slot => {
             const div = document.createElement("div");
             div.className = "full-slot";
             
@@ -1036,19 +1165,6 @@ footer .fa-heart {
           });
         }
       }
-
-      // Show modal
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "flex";
-
-      // Prevent body scroll while modal is open
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "none";
-      document.body.style.overflow = "auto"; // restore scroll
     }
 
     // Close modal when clicking outside content
