@@ -1,1185 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>APCRGC Personal Hub</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-:root {
-  /* Accents (Kept subtle) */
-  --primary: #8e76f8; 
-  --primary-light: #f4f2ff;
-  --secondary: #ff8fab; 
-  --secondary-light: #fff5f7;
-  
-  /* "Premium" Text Colors (Warmed up) */
-  --text: #1a1a1a; /* Dark, rich text */
-  --text-light: #615d59; /* Softer, warmer grey */
-  
-  /* --- "Premium Warm Milk-White" Theme --- */
-  --background: linear-gradient(145deg, #fdfaf8, #FBF9F7); /* NEW: Warm "milk-white" */
-  
-  /* "Tactile" Solid Cards & Ultra-Soft Shadow */
-  --card-bg: #ffffff; /* NEW: Solid white, no glass */
-  --border-light: 1px solid #f0ebe8; /* NEW: Faint warm border */
-  --backdrop-blur: none; /* NEW: Removed glass effect */
-  --shadow: 0 12px 35px rgba(97, 85, 75, 0.06); /* NEW: Softer, warmer shadow */
-  
-  --transition: all 0.3s ease;
-  
-  /* Supporting colors (Warmed up) */
-  --pdf-bg: #fff;
-  --pdf-hover: #fcfaf9;
-  --pdf-border: #f4f1ef; /* NEW: Warm border for items */
-  --pdf-text: #4a4744;
-
-  /* Holiday/No-Class (Mostly kept, slightly tweaked) */
-  --holiday: #ff7675;
-  --holiday-light: #fff9f9;
-  --holiday-border: #ffefef;
-  --no-class-bg: #f7fef9;
-  --no-class-text: #059669;
-  --no-class-border: #eefdf4;
-}
-
-/* Reset & Body */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--background);
-  color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  background-attachment: fixed;
-  -webkit-font-smoothing: antialiased; /* Smoother fonts */
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* --- "Milky" Solid Sidebar --- */
-#sidebar-toggle { display: none; }
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100%;
-  background: #ffffff; /* Solid white */
-  color: var(--text); 
-  padding: 25px;
-  transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 8px 0 40px rgba(97, 85, 75, 0.05); /* NEW: Warmer shadow */
-  border-right: 1px solid var(--pdf-border); /* NEW: Faint warm border */
-}
-
-.sidebar h2 {
-  font-family: 'Manrope', sans-serif;
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 1.4rem;
-  letter-spacing: 0.5px;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.sidebar label {
-  display: block;
-  text-align: right;
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-bottom: 25px;
-  color: var(--text-light);
-  transition: var(--transition);
-}
-.sidebar label:hover { color: var(--primary); }
-
-#sidebar-toggle:checked ~ .sidebar {
-  left: 0;
-}
-
-/* "Softer" PDF Items */
-.pdf-item {
-  margin-bottom: 12px;
-  background: var(--pdf-bg);
-  padding: 12px;
-  border-radius: 12px; /* NEW: Softer 12px */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.3s;
-  border: 1px solid var(--pdf-border); /* NEW: Using new variable */
-}
-
-.pdf-item:hover { 
-  background: var(--pdf-hover); 
-  transform: scale(1.02);
-  border-color: #e9e4e1;
-}
-
-.pdf-item.telegram { 
-  border-left: 4px solid #0088cc; 
-  background: #fafdff;
-}
-.pdf-item.telegram:hover { 
-  background: #f7fcff; 
-  border-color: #eef8ff;
-}
-
-.pdf-title {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--pdf-text);
-  font-family: 'Inter', sans-serif;
-}
-
-.pdf-buttons a {
-  margin-left: 8px;
-  text-decoration: none;
-  color: var(--text);
-  background: #fff;
-  padding: 6px 10px;
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
-  border-radius: 8px; /* NEW: Softer 8px */
-  font-size: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: 0.3s;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-}
-
-.pdf-buttons a:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(142, 118, 248, 0.2);
-}
-
-/* --- "Premium White" Main Container --- */
-.container {
-  max-width: 800px;
-  width: 100%;
-  
-  /* "Tactile" Solid White Card Effect */
-  background: var(--card-bg);
-  backdrop-filter: var(--backdrop-blur); /* 'none' from :root */
-  -webkit-backdrop-filter: var(--backdrop-blur);
-  border: var(--border-light);
-  
-  border-radius: 24px; /* NEW: Sharper, more "premium" radius */
-  padding: 50px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  position: relative;
-  transition: var(--transition);
-}
-
-/* Decorative background shapes (even softer) */
-.container::before,
-.container::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  filter: blur(120px); /* NEW: Softer */
-  opacity: 0.08; /* NEW: More subtle */
-}
-
-.container::before { width: 200px; height: 200px; top: 0%; left: -10%; }
-.container::after { width: 150px; height: 150px; bottom: 0%; right: -10%; }
-
-.header { text-align: center; margin-bottom: 35px; }
-
-h1 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 2.5rem;
-  color: var(--text);
-  font-weight: 700;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.03);
-  margin-bottom: 15px;
-}
-
-h1 span { 
-  color: var(--primary);
-  cursor: pointer; 
-  text-decoration: none;
-  position: relative;
-  transition: var(--transition);
-}
-
-h1 span::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  background: var(--primary);
-  bottom: -5px;
-  left: 0;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-h1 span:hover::after {
-  transform: scaleX(1);
-}
-
-p { 
-  color: var(--text-light); 
-  font-size: 1.1rem; 
-  line-height: 1.7; 
-  font-family: 'Inter', sans-serif;
-}
-
-/* "Softer" Buttons & Links */
-.quick-links {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.btn {
-  padding: 14px 28px;
-  border-radius: 30px; /* Pill-like */
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500; /* NEW: 'Medium' is more premium than '600' */
-  font-size: 0.95rem; /* NEW: Slightly more refined */
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1); /* NEW: Softer shadow */
-  background: var(--primary);
-  color: #fff;
-  border: 1px solid transparent; /* NEW: Cleaner border */
-}
-
-.btn:hover {
-  background: #fff;
-  color: var(--primary);
-  border-color: var(--primary);
-  transform: translateY(-2px); /* NEW: Softer lift */
-  box-shadow: 0 6px 16px rgba(142, 118, 248, 0.2); /* NEW: Softer "glow" */
-}
-
-/* NEW: Gentle scale animation on press */
-.btn:active {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1);
-}
-
-.btn-secondary {
-  background: var(--secondary);
-  box-shadow: 0 2px 8px rgba(253, 121, 168, 0.1); /* NEW: Softer shadow */
-}
-
-.btn-secondary:hover {
-  background: #fff;
-  color: var(--secondary);
-  border-color: var(--secondary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(253, 121, 168, 0.25);
-}
-
-/* --- "Premium Milky White" Grid Content & Cards --- */
-.content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px; 
-  margin-bottom: 30px;
-}
-
-.card {
-  /* Solid "tactile" white card */
-  background: #ffffff;
-  border: 1px solid var(--border-light); /* NEW: Faint warm border */
-  
-  border-radius: 16px; /* NEW: Standard premium radius */
-  padding: 25px;
-  box-shadow: 0 4px 15px rgba(97, 85, 75, 0.04); /* NEW: Softer, warmer shadow */
-  transition: var(--transition);
-  position: relative;
-  text-align: center;
-  overflow: hidden; 
-}
-
-.card:hover {
-  transform: translateY(-6px); /* NEW: Subtler lift */
-  box-shadow: 0 10px 25px rgba(97, 85, 75, 0.07); /* NEW: Warmer hover */
-  border-color: #e9e4e1;
-}
-
-/* "Cute" gradient icon */
-.card-icon {
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary);
-  font-size: 28px;
-  margin: 10px auto 20px auto;
-  box-shadow: 0 4px 10px rgba(142, 118, 248, 0.05); /* NEW: Softer shadow */
-  transition: all 0.3s ease-in-out; /* <-- UPDATED: Added transition */
-}
-
-/* <-- NEW: Added playful hover effect for icon --> */
-.card:hover .card-icon {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 8px 20px rgba(142, 118, 248, 0.15);
-}
-
-.card h3 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.3rem;
-  color: var(--text);
-  margin-bottom: 10px;
-  transition: var(--transition);
-  font-weight: 600;
-}
-
-.card:hover h3 {
-  color: var(--primary); /* Color changes on hover */
-}
-
-.card p { 
-  font-size: 0.95rem; 
-  color: var(--text-light); 
-  margin-bottom: 20px; 
-}
-
-/* --- "Cute" Footer --- */
-footer { 
-  text-align: center; 
-  color: var(--text-light); 
-  font-size: 0.95rem; 
-  font-family: 'Inter', sans-serif;
-}
-footer .fa-heart {
-  color: var(--secondary);
-  margin: 0 2px;
-  font-size: 0.9rem;
-  animation: pulse 1.75s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .content { grid-template-columns: 1fr; }
-  .quick-links { flex-direction: column; align-items: center; }
-  .quick-links .btn { width: 100%; max-width: 300px; }
-}
-
-@media (max-width: 480px) {
-  .container { padding: 30px 20px; border-radius: 20px; } /* NEW */
-  h1 { font-size: 2rem; }
-  p { font-size: 1rem; }
-  .btn { padding: 12px 22px; }
-  .card-icon { width: 60px; height: 60px; font-size: 24px; margin-bottom: 15px; }
-}
-
-/* --- "Premium White" Routine Box --- */
-.routine-box {
-  width: 90%;
-  max-width: 480px;          
-  background: #ffffff; /* NEW: Solid white */
-  border-radius: 16px; /* NEW: Standard 16px */      
-  padding: 28px 25px;        
-  cursor: pointer;
-  transition: all 0.35s ease-in-out;
-  margin: 20px auto;
-  border: 1px solid var(--border-light); /* NEW: Faint warm border */
-  box-shadow: 0 10px 30px rgba(97, 85, 75, 0.05); /* NEW: Warmer, softer shadow */
-}
-
-.routine-box:hover {
-  transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 18px 45px rgba(142, 118, 248, 0.08); /* Kept purple glow */
-  border-color: #f4f1ef;
-}
-
-.routine-box.holiday {
-  background: var(--holiday-light);
-  border: 1px solid var(--holiday-border);
-}
-.routine-box.holiday:hover {
-  box-shadow: 0 14px 35px rgba(255, 118, 117, 0.1);
-}
-
-.routine-box h2 {
-  font-family: 'Manrope', sans-serif;
-  text-align: center;
-  font-size: 25px;
-  margin-bottom: 12px;
-  color: #1e293b;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.routine-box.holiday h2 {
-  color: var(--holiday);
-}
-
-.clock {
-  font-family: 'Inter', sans-serif;
-  text-align: center;
-  font-size: 19px;
-  font-weight: 600;
-  margin-bottom: 14px;
-  color: var(--no-class-text);
-}
-
-.day-title {
-  font-family: 'Manrope', sans-serif;
-  font-size: 18px;
-  text-align: center;
-  color: var(--primary);
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-.class-slot {
-  background: #fdfcfb; /* NEW: Very light warm background */
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
-  border-radius: 12px; /* NEW: 12px */
-  padding: 13px;
-  margin-bottom: 11px;
-  text-align: left;
-  font-size: 15.5px;
-  color: #111827;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  transition: 0.25s;
-}
-
-/* "Premium" Highlight Style */
-.highlight {
-  background: linear-gradient(135deg, var(--primary), #a38fff) !important;
-  border: none !important;
-  color: #fff !important;
-  box-shadow: 0 8px 20px rgba(142, 118, 248, 0.35);
-  transform: scale(1.03);
-}
-
-.highlight .subject, .highlight .time {
-  color: #fff !important;
-  font-weight: 600;
-}
-
-.no-class {
-  text-align: center;
-  color: var(--no-class-text);
-  background: var(--no-class-bg);
-  font-weight: 600;
-  padding: 15px;
-  border-radius: 12px; /* NEW: 12px */
-  border: 1px solid var(--no-class-border);
-  font-family: 'Inter', sans-serif;
-}
-
-.holiday-class {
-  text-align: center;
-  color: var(--holiday);
-  background: var(--holiday-light);
-  font-weight: 600;
-  padding: 15px;
-  border-radius: 14px;
-  border: 1px solid var(--holiday-border);
-  font-family: 'Inter', sans-serif;
-}
-
-/* --- "Softer Milky" Modal --- */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  /* NEW: Lighter, "milky" backdrop WITHOUT blur */
-  background: rgba(251, 249, 247, 0.6); 
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.3s ease;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 25px;
-  border-radius: 20px; /* NEW: 20px */
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 15px 40px rgba(97, 85, 75, 0.1); /* NEW: Warmer, stronger shadow */
-  max-height: 80vh;
-  overflow-y: auto;
-  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.modal-nav {
-  display: flex;
-  gap: 10px;
-}
-
-.nav-btn {
-  background: var(--primary-light);
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  font-size: 16px;
-}
-
-.nav-btn:hover {
-  background: var(--primary);
-  color: white;
-  transform: scale(1.1);
-}
-
-.nav-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.nav-btn:disabled:hover {
-  background: var(--primary-light);
-  color: var(--primary);
-  transform: none;
-}
-
-.modal h3 { 
-  font-family: 'Manrope', sans-serif;
-  text-align: center; 
-  margin-bottom: 0;
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 1.4rem;
-  flex-grow: 1;
-}
-.close-btn { 
-  font-size: 28px;
-  font-weight: 300;
-  cursor: pointer; 
-  color: #aaa;
-  transition: var(--transition);
-  line-height: 1;
-}
-.close-btn:hover { color: var(--secondary); transform: rotate(90deg); }
-
-.full-slot {
-  background: #fdfcfb; /* NEW: Very light warm bg */
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
-  margin-bottom: 8px;
-  padding: 12px 15px;
-  border-radius: 10px; /* NEW: 10px */
-  font-size: 14.5px;
-  transition: var(--transition);
-  font-family: 'Inter', sans-serif; /* NEW: Font */
-}
-.full-slot:hover {
-  border-color: var(--primary-light);
-  background: var(--primary-light);
-}
-
-.full-slot .time { font-weight: 600; color: #374151; }
-.full-slot .subject { margin-left: 8px; color: #1e40af; }
-
-.teacher-link {
-  color: #1e40af;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 600;
-  border-bottom: 1px dotted #1e40af;
-}
-
-.teacher-link:hover { 
-  color: var(--primary); 
-  text-decoration: none; 
-  border-bottom-color: var(--primary);
-}
-.highlight .teacher-link { 
-  color: #fff !important; 
-  border-bottom: 1px dotted #fff;
-  font-weight: 600;
-}
-.highlight .teacher-link:hover { 
-  color: #dbeafe !important; 
-  border-bottom-color: #dbeafe;
-}
-
-/* Keyframes */
-@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-@keyframes slideUp { 
-  from {transform: translateY(30px) scale(0.98); opacity: 0;} 
-  to {transform: translateY(0) scale(1); opacity: 1;} 
-}
-
-/* Routine Box Responsive */
-@media (max-width: 600px) {
-  .routine-box { padding: 22px 18px; border-radius: 16px; } /* NEW */
-  .routine-box h2 { font-size: 21px; }
-  .clock { font-size: 16.5px; }
-  .day-title { font-size: 16px; }
-  .class-slot { font-size: 14px; padding: 11px; }
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Gateway</title>
+    <!-- Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-soft: #818cf8;
+            --bg-color: #f3f4f6;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --input-bg: #f9fafb;
+            --border: #e5e7eb;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
+            --error: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            perspective: 1000px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+        }
+
+        /* Hidden State for Transitions */
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Logo/Icon Area */
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fff 0%, #f3f4f6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-size: 32px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .icon-circle::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), transparent);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        /* Typography */
+        h1 {
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 24px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        /* Input Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            font-size: 16px;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        input:focus {
+            background: #fff;
+            border-color: var(--primary-soft);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        input:focus + i {
+            color: var(--primary);
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: var(--text-sub);
+            box-shadow: none;
+            margin-top: 12px;
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .btn.secondary:hover {
+            color: var(--text-main);
+            transform: none;
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* Loading/Success States */
+        .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Shake Animation for Error */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+        .toast.error i { color: var(--error); }
+        .toast.success i { color: var(--success); }
+
+    </style>
 </head>
 <body>
 
-  <input type="checkbox" id="sidebar-toggle">
+    <div class="wrapper">
+        
+        <!-- STAGE 1: Initial Login -->
+        <div id="stage1" class="card fade-in">
+            <div class="icon-circle">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <h1>Authentication</h1>
+            <p class="subtitle">Enter your primary access code to proceed.</p>
 
-  <div class="sidebar">
-    <label for="sidebar-toggle"><i class="fas fa-times"></i> Close</label>
-
-    <h2>Class Routine</h2>
-
-    <div class="pdf-item">
-      <span class="pdf-title">Physics Routine</span>
-      <div class="pdf-buttons">
-        <a href="routine/Physics_Routine_July-Dec_2025.pdf" target="_blank">
-          <i class="fas fa-eye"></i> View
-        </a>
-        <a href="routine/Physics_Routine_July-Dec_2025.pdf" download>
-          <i class="fas fa-download"></i> Download
-        </a>
-      </div>
-    </div>
-
-    <div class="pdf-item">
-      <span class="pdf-title">Maths Routine</span>
-      <div class="pdf-buttons">
-        <a href="routine/Mathematics_Odd Sem, 25-26.pdf" target="_blank">
-          <i class="fas fa-eye"></i> View
-        </a>
-        <a href="routine/Mathematics_Odd Sem, 25-26.pdf" download>
-          <i class="fas fa-download"></i> Download
-        </a>
-      </div>
-    </div>
-
-<h2>Telegram Links</h2>
-
-  <div class="pdf-item telegram">
-    <span class="pdf-title">APCRGC Physics Channel</span>
-    <div class="pdf-buttons">
-      <a href="https://t.me/apcrgc_physics_majors2025" target="_blank">
-        <i class="fab fa-telegram"></i> Join
-      </a>
-    </div>
-  </div>
-
-  <div class="pdf-item telegram">
-    <span class="pdf-title">APCRGC Physics discussion Group</span>
-    <div class="pdf-buttons">
-      <a href="https://t.me/+ujwomW6LE4kwNTk1" target="_blank">
-        <i class="fab fa-telegram"></i> Join
-      </a>
-    </div>
-  </div>
-
-  </div>
-
-
-  <div class="container">
-    <div class="header">
-      <h1>Welcome to My APCRGC <span onclick="document.getElementById('sidebar-toggle').click();">Hub</span></h1>
-      <p>Your personal college directory with quick access to portfolios, projects, and educational resources.</p>
-    </div>
-
-    <div class="quick-links">
-      <a href="https://physics-attendance.netlify.app/" class="btn" target="_blank">
-        <i class="fas fa-user-circle"></i> Portfolio - Physics
-      </a>
-      <a href="https://profanup.netlify.app/semesters/attendance.html" class="btn btn-secondary" target="_blank">
-        <i class="fas fa-chart-line"></i> Portfolio - Mathematics
-      </a>
-    </div>
-
-    <div class="routine-box" id="routineBox" onclick="openModal()">
-      <h2>📘 SEM 1 Routine</h2>
-      <div class="clock" id="clock">--:-- --</div>
-      <div class="day-title" id="dayTitle">Loading...</div>
-      <div id="currentClass">Please wait...</div>
-    </div>
-  
-    <div id="routineModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-nav">
-            <button class="nav-btn" id="prevDayBtn" onclick="navigateDay(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="nav-btn" id="nextDayBtn" onclick="navigateDay(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <h3 id="modalDay"></h3>
-          <span class="close-btn" onclick="closeModal()">&times;</span>
+            <form id="form1" onsubmit="handleStage1(event)">
+                <div class="input-group">
+                    <input type="password" id="pass1" placeholder="Enter PIN" autocomplete="off" inputmode="numeric">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button type="submit" class="btn">
+                    <span>Unlock</span>
+                    <div class="loader" id="loader1"></div>
+                </button>
+            </form>
         </div>
-        <div id="fullRoutine"></div>
-      </div>
+
+        <!-- STAGE 2: Secondary Verification -->
+        <div id="stage2" class="card hidden">
+            <div class="icon-circle">
+                <i class="fas fa-shield-alt" style="color: #10b981;"></i>
+            </div>
+            <h1>Security Check</h1>
+            <p class="subtitle">Final verification required for secure access.</p>
+
+            <form id="form2" onsubmit="handleStage2(event)">
+                <div class="input-group">
+                    <input type="password" id="pass2" placeholder="Secondary PIN" autocomplete="off" inputmode="numeric">
+                    <i class="fas fa-key"></i>
+                </div>
+                <button type="submit" class="btn">
+                    <span>Verify & Access</span>
+                    <div class="loader" id="loader2"></div>
+                </button>
+                <button type="button" class="btn secondary" onclick="goBack()">
+                    Cancel
+                </button>
+            </form>
+        </div>
+
+        <!-- SUCCESS STATE (Simulation of switch.html loading) -->
+        <div id="stageSuccess" class="card hidden">
+            <div class="icon-circle" style="background: #ecfdf5;">
+                <i class="fas fa-check" style="color: #10b981;"></i>
+            </div>
+            <h1>Access Granted</h1>
+            <p class="subtitle">Redirecting to secure environment...</p>
+            <div style="width: 100%; height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; margin-top: 20px;">
+                <div style="width: 100%; height: 100%; background: #10b981; animation: progress 1.5s ease-in-out;"></div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="content">
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-atom"></i>
-        </div>
-        <h3>Physics Department</h3>
-        <p>Official website of APCRGC Physics Department with resources and information.</p>
-        <a href="https://sites.google.com/apcrgc.org/apcrgcphysics/home?authuser=0" class="btn" target="_blank">
-          <i class="fas fa-external-link-alt"></i> Visit
-        </a>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-book-open"></i>
-        </div>
-        <h3>Physics PYQ's</h3>
-        <p>Previous year question papers for Semester I to VI Physics courses.</p>
-        <a href="Physics-Pyq's.html" class="btn" target="_blank">
-          <i class="fas fa-external-link-alt"></i> Open
-        </a>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">
-          <i class="fas fa-calculator"></i>
-        </div>
-        <h3>Mathematics</h3>
-        <p>Profanup mathematics resources by teacher with attendance tracking.</p>
-        <a href="https://profanup.netlify.app" class="btn" target="_blank">
-          <i class="fas fa-external-link-alt"></i> Open Present
-        </a>
-      </div>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="toastMsg">Error message</span>
     </div>
 
-    <footer>
-      <p>APCRGC Personal Hub • Designed with ❤️</p>
-    </footer>
-  </div>
+ <script src="toastMsg.textContentdx.js"></script>
 
-  <script>
-    // Teacher URLs mapping - each teacher has their own unique link
-    const teacherURLs = {
-      "Dr. Md Hasanujjaman": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Koustuv Roy": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Supriya Chatterjee": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Ikbal Mandal": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Hirujit Ghosh": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Ms. Nilanjana Nandi": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Nivedita Chatterjee": "  "
-    };
 
-    // Holiday list for 2025 (from the PDF)
-    const holidays2025 = [
-      "01/01/2025", // New Year's Day
-      "14/01/2025", // Makar Sankranti
-      "23/01/2025", // Birthday of Netaji
-      "03/02/2025", // Day after Saraswati Puja
-      "14/02/2025", // Birthday of Thakur Panchanan Barma and Shab-e-Barat
-      "26/02/2025", // Maha Shivaratri
-      "14/03/2025", // Doljatra & Holi
-      "15/03/2025", // Day after Doljatra
-      "27/03/2025", // Birthday of Shri Shri Harichand Thakur
-      "31/03/2025", // Eid-ul-Fitar
-      "01/04/2025", // Day after Eid-ul-Fitar
-      "10/04/2025", // Mahavir Jayanti
-      "14/04/2025", // Birthday of Dr. B.R. Ambedkar
-      "15/04/2025", // Bengali New Year's Day
-      "18/04/2025", // Good Friday
-      "01/05/2025", // May Day
-      // Summer Vacation: 05/05/2025 to 27/06/2025 (46 days)
-      "27/06/2025", // Rathayatra
-      "21/07/2025", // College Foundation Day
-      "02/08/2025", // Birthday of Acharya Prafulla Chandra Roy
-      "09/08/2025", // Rakhi Bandhan
-      "15/08/2025", // Independence Day & Janmashtami
-      "05/09/2025", // Fateha-Dwaz-Daham
-      "17/09/2025", // Viswakarma Puja
-      // Puja Vacation: 22/09/2025 to 05/11/2025 (39 days)
-      // Winter Vacation: 25/12/2025 to 31/12/2025 (6 days)
-      "31/12/2025"  // Principal's Discretion
-    ];
-
-    // Add all summer vacation days
-    const addSummerVacationDays = () => {
-      const startDate = new Date("05/05/2025");
-      const endDate = new Date("06/27/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
+    <style>
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
         }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Add all puja vacation days
-    const addPujaVacationDays = () => {
-      const startDate = new Date("09/22/2025");
-      const endDate = new Date("11/05/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Add all winter vacation days
-    const addWinterVacationDays = () => {
-      const startDate = new Date("12/25/2025");
-      const endDate = new Date("12/31/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
-
-    // Format date as MM/DD/YYYY
-    const formatDate = (date) => {
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      const year = date.getFullYear();
-      return `${month}/${day}/${year}`;
-    };
-
-    // Initialize holiday list with vacation periods
-    addSummerVacationDays();
-    addPujaVacationDays();
-    addWinterVacationDays();
-
-    // Check if today is a holiday
-    const isHoliday = () => {
-      const today = new Date();
-      
-      // *** DEBUGGING: Uncomment to test holiday
-      // const todayString = "11/04/2025"; // Test Puja vacation
-      // return holidays2025.includes(todayString);
-      
-      const todayString = formatDate(today);
-      return holidays2025.includes(todayString);
-    };
-
-    // Helper: Convert 24hr string (HH:MM) to 12hr format
-    function to12Hour(time) {
-      let [h, m] = time.split(":").map(Number);
-      const ampm = h >= 12 ? "PM" : "AM";
-      h = h % 12;
-      h = h ? h : 12;
-      return `${h}:${m.toString().padStart(2,"0")} ${ampm}`;
-    }
-
-    // Process subject text to make teacher names clickable
-    function processSubjectText(text) {
-      // Create a copy of the text to work with
-      let processedText = text;
-      
-      // Replace each teacher name with a clickable link
-      Object.keys(teacherURLs).forEach(teacher => {
-        const regex = new RegExp(teacher, 'g');
-        processedText = processedText.replace(
-          regex, 
-          `<span class="teacher-link" onclick="event.stopPropagation(); window.open('${teacherURLs[teacher]}', '_blank')">${teacher}</span>`
-        );
-      });
-      
-      return processedText;
-    }
-
-    // SEM 1 full week routine with teacher names
-    const routine = {
-      "MON": [
-        { start: "10:30", end: "11:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:00", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC - Dr. Md Hasanujjaman" },
-        { start: "04:00", end: "05:00", subject: "SEC - Dr. Koustuv Roy" }
-      ],
-      "TUE": [
-        { start: "10:30", end: "11:30", subject: "MIN1 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MIN1 - Dr. Supriya Chatterjee" },
-        { start: "12:30", end: "01:30", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "03:00", end: "04:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal & Dr. Md Hasanujjaman" }
-      ],
-      "WED": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "MIN1 - Mr. Ikbal Mandal" },
-        { start: "01:30", end: "02:00", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "03:00", end: "04:00", subject: "No classes" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-      ],
-      "THU": [
-        { start: "10:30", end: "11:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "11:30", end: "12:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-        { start: "03:00", end: "04:00", subject: "MAJ2 - Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "MAJ2 - Dr. Supriya Chatterjee" }
-      ],
-      "FRI": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:20", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" }
-      ],
-      "SAT": [
-        { start: "10:30", end: "11:30", subject: "Remedial Class - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "Remedial Class - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "Remedial Class - Mr. Hirujit Ghosh" },
-        { start: "02:00", end: "03:00", subject: "Tutorial - Ms. Nilanjana Nandi" }
-      ]
-    };
-
-    // Global variable to track current day in modal
-    let currentModalDay = "";
-
-    function timeToMinutes(t) {
-      const [h, m] = t.split(":").map(Number);
-      return h * 60 + m;
-    }
-
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      document.getElementById("clock").textContent = `${hours}:${minutes} ${ampm}`;
-    }
-
-    function loadCurrentClass() {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const now = new Date();
-      const today = dayNames[now.getDay()];
-      document.getElementById("dayTitle").textContent = today;
-
-      const routineBox = document.getElementById("routineBox");
-      
-      // Check if today is a holiday
-      if (isHoliday()) {
-        routineBox.classList.add("holiday");
-        document.getElementById("currentClass").innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes Today</div>`;
-        return;
-      } else {
-        routineBox.classList.remove("holiday");
-      }
-
-      const todayRoutine = routine[today];
-      const container = document.getElementById("currentClass");
-      container.innerHTML = "";
-
-      if (!todayRoutine) {
-        container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
-        return;
-      }
-
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-      let found = false;
-
-      todayRoutine.forEach(slot => {
-        if (currentMinutes >= timeToMinutes(slot.start) &&
-            currentMinutes < timeToMinutes(slot.end)) {
-          const div = document.createElement("div");
-          div.className = "class-slot highlight";
-          div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
-                           <span class="subject">${processSubjectText(slot.subject)}</span>`;
-          container.appendChild(div);
-          found = true;
-        }
-      });
-
-      if (!found) {
-        container.innerHTML = `<div class="no-class">✅ No class right now</div>`;
-      }
-    }
-
-    function openModal() {
-      const now = new Date();
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const today = dayNames[now.getDay()];
-      
-      // Set current modal day to today
-      currentModalDay = today;
-      
-      // Update navigation buttons
-      updateNavButtons();
-      
-      // Load routine for current day
-      loadRoutineForDay(today);
-      
-      // Show modal
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "flex";
-
-      // Prevent body scroll while modal is open
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "none";
-      document.body.style.overflow = "auto"; // restore scroll
-    }
-
-    function navigateDay(direction) {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const currentIndex = dayNames.indexOf(currentModalDay);
-      let newIndex = currentIndex + direction;
-      
-      // Handle wrap-around
-      if (newIndex < 0) newIndex = 6;
-      if (newIndex > 6) newIndex = 0;
-      
-      currentModalDay = dayNames[newIndex];
-      updateNavButtons();
-      loadRoutineForDay(currentModalDay);
-    }
-
-    function updateNavButtons() {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const currentIndex = dayNames.indexOf(currentModalDay);
-      
-      // Update button states
-      document.getElementById("prevDayBtn").disabled = false;
-      document.getElementById("nextDayBtn").disabled = false;
-      
-      // You can add logic here to disable buttons if needed
-      // For example, if you don't want to navigate to Sunday
-      // if (currentIndex === 0) {
-      //   document.getElementById("prevDayBtn").disabled = true;
-      // }
-      // if (currentIndex === 6) {
-      //   document.getElementById("nextDayBtn").disabled = true;
-      // }
-    }
-
-    function loadRoutineForDay(day) {
-      // Check if the day is a holiday
-      const now = new Date();
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const todayIndex = dayNames.indexOf(day);
-      const currentIndex = dayNames.indexOf(dayNames[now.getDay()]);
-      
-      // Calculate date for the selected day
-      const dateDiff = todayIndex - currentIndex;
-      const selectedDate = new Date();
-      selectedDate.setDate(selectedDate.getDate() + dateDiff);
-      const selectedDateString = formatDate(selectedDate);
-      
-      const isDayHoliday = holidays2025.includes(selectedDateString);
-      
-      if (isDayHoliday) {
-        document.getElementById("modalDay").textContent = day + " - Holiday (No Classes)";
-        document.getElementById("fullRoutine").innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday - No Classes Scheduled</div>`;
-      } else {
-        document.getElementById("modalDay").textContent = day + " - Full Routine";
-
-        const dayRoutine = routine[day];
-        const container = document.getElementById("fullRoutine");
-        container.innerHTML = "";
-
-        if (!dayRoutine || dayRoutine.length === 0) {
-          container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
-        } else {
-          dayRoutine.forEach(slot => {
-            const div = document.createElement("div");
-            div.className = "full-slot";
-            
-            // Handle 'No classes' or 'Recess Hour' specially
-            const subjectText = slot.subject.toLowerCase().includes("no class") || slot.subject.toLowerCase().includes("recess")
-                                ? slot.subject
-                                : processSubjectText(slot.subject);
-
-            div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
-                             <span class="subject">${subjectText}</span>`;
-            container.appendChild(div);
-          });
-        }
-      }
-    }
-
-    // Close modal when clicking outside content
-    window.onclick = function(event) {
-      const modal = document.getElementById("routineModal");
-      if (event.target === modal) {
-        closeModal();
-      }
-    }
-
-    // Initialize
-    updateClock();
-    loadCurrentClass();
-    setInterval(updateClock, 1000);
-    setInterval(loadCurrentClass, 30000); // Update every 30 seconds
-  </script>
+    </style>
 </body>
 </html>
