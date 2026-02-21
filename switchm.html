@@ -994,140 +994,144 @@ footer .fa-heart {
       }
     }
 
-    // --- 📌 SMART PDF PIN & STRICT LOCK LOGIC ---
-    let currentPdfUrl = "";
-    let lockTimerInterval = null;
+// --- 📌 SMART PDF PIN & STRICT LOCK LOGIC ---
+let currentPdfUrl = "";
+let lockTimerInterval = null;
 
-    function openPdfModal(url, isAutoLock = false) {
-      currentPdfUrl = url;
-      document.getElementById("pdfFrame").src = url;
-      document.getElementById("pdfModal").style.display = "flex";
-      document.body.style.overflow = "hidden"; 
+function openPdfModal(url, isAutoLock = false) {
+  currentPdfUrl = url;
+  document.getElementById("pdfFrame").src = url;
+  document.getElementById("pdfModal").style.display = "flex";
+  document.body.style.overflow = "hidden"; 
 
-      const pinBtn = document.getElementById("pinBtn");
-      const pinText = document.getElementById("pinText");
+  const pinBtn = document.getElementById("pinBtn");
+  const pinText = document.getElementById("pinText");
+  
+  if (localStorage.getItem("pinnedPdfUrl") === url) {
+    pinBtn.style.background = "var(--primary)";
+    pinBtn.style.color = "white";
+    pinText.innerText = "Pinned";
+  } else {
+    pinBtn.style.background = "var(--primary-light)";
+    pinBtn.style.color = "var(--primary)";
+    pinText.innerText = "Pin Routine";
+  }
+
+  if (isAutoLock) {
+    const closeBtn = document.getElementById("closePdfBtn");
+    const timerUI = document.getElementById("pdfTimer");
+    const timeText = document.getElementById("timeRemaining");
+    
+    closeBtn.style.display = "none"; 
+    timerUI.style.display = "block";
+    
+    let timeLeft = 180; 
+    
+    lockTimerInterval = setInterval(() => {
+      timeLeft--;
+      let m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      let s = (timeLeft % 60).toString().padStart(2, '0');
+      timeText.innerText = `${m}:${s}`;
       
-      if (localStorage.getItem("pinnedPdfUrl") === url) {
-        pinBtn.style.background = "var(--primary)";
-        pinBtn.style.color = "white";
-        pinText.innerText = "Pinned";
-      } else {
-        pinBtn.style.background = "var(--primary-light)";
-        pinBtn.style.color = "var(--primary)";
-        pinText.innerText = "Pin Routine";
+      if (timeLeft <= 0) {
+        clearInterval(lockTimerInterval);
+        closeBtn.style.display = "block"; 
+        timerUI.innerHTML = "✅ Unlocked! Good job.";
+        timerUI.style.background = "#d1fae5";
+        timerUI.style.color = "#059669";
+        setTimeout(() => { timerUI.style.display = "none"; }, 4000);
       }
+    }, 1000);
 
-      if (isAutoLock) {
-        const closeBtn = document.getElementById("closePdfBtn");
-        const timerUI = document.getElementById("pdfTimer");
-        const timeText = document.getElementById("timeRemaining");
-        
-        closeBtn.style.display = "none"; 
-        timerUI.style.display = "block";
-        
-        let timeLeft = 180; 
-        
-        lockTimerInterval = setInterval(() => {
-          timeLeft--;
-          let m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-          let s = (timeLeft % 60).toString().padStart(2, '0');
-          timeText.innerText = `${m}:${s}`;
-          
-          if (timeLeft <= 0) {
-            clearInterval(lockTimerInterval);
-            closeBtn.style.display = "block"; 
-            timerUI.innerHTML = "✅ Unlocked! Good job.";
-            timerUI.style.background = "#d1fae5";
-            timerUI.style.color = "#059669";
-            setTimeout(() => { timerUI.style.display = "none"; }, 4000);
-          }
-        }, 1000);
+  } else {
+    document.getElementById("closePdfBtn").style.display = "block";
+    document.getElementById("pdfTimer").style.display = "none";
+    
+    const toast = document.getElementById("toastPopup");
+    toast.style.display = "block";
+    setTimeout(() => { toast.style.display = "none"; }, 6000);
+  }
+}
 
-      } else {
-        document.getElementById("closePdfBtn").style.display = "block";
-        document.getElementById("pdfTimer").style.display = "none";
-        
-        const toast = document.getElementById("toastPopup");
-        toast.style.display = "block";
-        setTimeout(() => { toast.style.display = "none"; }, 6000);
-      }
-    }
+function closePdfModal() {
+  document.getElementById("pdfModal").style.display = "none";
+  document.getElementById("pdfFrame").src = ""; 
+  document.body.style.overflow = "auto";
+  if(lockTimerInterval) clearInterval(lockTimerInterval);
+}
 
-    function closePdfModal() {
-      document.getElementById("pdfModal").style.display = "none";
-      document.getElementById("pdfFrame").src = ""; 
-      document.body.style.overflow = "auto";
-      if(lockTimerInterval) clearInterval(lockTimerInterval);
-    }
+function togglePin() {
+  const pinBtn = document.getElementById("pinBtn");
+  const pinText = document.getElementById("pinText");
 
-    function togglePin() {
-      const pinBtn = document.getElementById("pinBtn");
-      const pinText = document.getElementById("pinText");
+  if (localStorage.getItem("pinnedPdfUrl") === currentPdfUrl) {
+    localStorage.removeItem("pinnedPdfUrl");
+    pinBtn.style.background = "var(--primary-light)";
+    pinBtn.style.color = "var(--primary)";
+    pinText.innerText = "Pin Routine";
+    alert("✅ Unpinned! Main page will open normally next time.");
+  } else {
+    localStorage.setItem("pinnedPdfUrl", currentPdfUrl);
+    pinBtn.style.background = "var(--primary)";
+    pinBtn.style.color = "white";
+    pinText.innerText = "Pinned";
+    alert("📌 Warning: Routine Pinned! \n\nNext time you visit this Hub, you will be strictly locked to this PDF for 3 minutes. Focus!");
+  }
+}
 
-      if (localStorage.getItem("pinnedPdfUrl") === currentPdfUrl) {
-        localStorage.removeItem("pinnedPdfUrl");
-        pinBtn.style.background = "var(--primary-light)";
-        pinBtn.style.color = "var(--primary)";
-        pinText.innerText = "Pin Routine";
-        alert("✅ Unpinned! Main page will open normally next time.");
-      } else {
-        localStorage.setItem("pinnedPdfUrl", currentPdfUrl);
-        pinBtn.style.background = "var(--primary)";
-        pinBtn.style.color = "white";
-        pinText.innerText = "Pinned";
-        alert("📌 Warning: Routine Pinned! \n\nNext time you visit this Hub, you will be strictly locked to this PDF for 3 minutes. Focus!");
-      }
-    }
+window.onclick = (e) => { 
+  if(e.target === document.getElementById("routineModal")) closeModal(); 
+  if(e.target === document.getElementById("pdfModal") && document.getElementById("closePdfBtn").style.display !== "none") {
+    closePdfModal();
+  }
+};
 
-    window.onclick = (e) => { 
-      if(e.target === document.getElementById("routineModal")) closeModal(); 
-      if(e.target === document.getElementById("pdfModal") && document.getElementById("closePdfBtn").style.display !== "none") {
-        closePdfModal();
-      }
-    };
+// --- INIT ---
+document.addEventListener("DOMContentLoaded", () => {
+  const latestMaths = getLatestPdf(mathsPdfs);
+  const latestPhysics = getLatestPdf(physicsPdfs);
+  const latestHoliday = getLatestYearlyPdf(holidayPdfs); 
 
-    // --- INIT ---
-    document.addEventListener("DOMContentLoaded", () => {
-      const latestMaths = getLatestPdf(mathsPdfs);
-      const latestPhysics = getLatestPdf(physicsPdfs);
-      const latestHoliday = getLatestYearlyPdf(holidayPdfs); 
+  const mathUrl = `routine/maths/${latestMaths}`;
+  const physUrl = `routine/physics/${latestPhysics}`;
+  const holUrl = `routine/holidays/${latestHoliday}`; 
 
-      const mathUrl = `routine/maths/${latestMaths}`;
-      const physUrl = `routine/physics/${latestPhysics}`;
-      const holUrl = `routine/holidays/${latestHoliday}`; 
+  if(document.getElementById("math-view-btn")) {
+    document.getElementById("math-view-btn").href = "#";
+    document.getElementById("math-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(mathUrl); };
+    document.getElementById("math-down-btn").href = mathUrl;
+  }
+  if(document.getElementById("phys-view-btn")) {
+    document.getElementById("phys-view-btn").href = "#";
+    document.getElementById("phys-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(physUrl); };
+    document.getElementById("phys-down-btn").href = physUrl;
+  }
+  if(document.getElementById("hol-view-btn")) {
+    document.getElementById("hol-view-btn").href = "#";
+    document.getElementById("hol-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(holUrl); };
+    document.getElementById("hol-down-btn").href = holUrl;
+  }
 
-      if(document.getElementById("math-view-btn")) {
-        document.getElementById("math-view-btn").href = "#";
-        document.getElementById("math-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(mathUrl); };
-        document.getElementById("math-down-btn").href = mathUrl;
-      }
-      if(document.getElementById("phys-view-btn")) {
-        document.getElementById("phys-view-btn").href = "#";
-        document.getElementById("phys-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(physUrl); };
-        document.getElementById("phys-down-btn").href = physUrl;
-      }
-      if(document.getElementById("hol-view-btn")) {
-        document.getElementById("hol-view-btn").href = "#";
-        document.getElementById("hol-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(holUrl); };
-        document.getElementById("hol-down-btn").href = holUrl;
-      }
+  // 🔥 DIRECT OPEN ON PAGE RELOAD - NO MODAL, JUST OPEN PDF
+  const pinnedPdf = localStorage.getItem("pinnedPdfUrl");
+  if (pinnedPdf) {
+    // Open directly in new tab instead of modal
+    window.open(pinnedPdf, '_blank');
+    // Optional: Clear the pin after opening? Uncomment below if you want to clear after use
+    // localStorage.removeItem("pinnedPdfUrl");
+  }
 
-      const pinnedPdf = localStorage.getItem("pinnedPdfUrl");
-      if (pinnedPdf) {
-        openPdfModal(pinnedPdf, true);
-      }
+  const previousSemester = localStorage.getItem("savedSemester");
+  if (previousSemester) document.getElementById("semSelect").value = previousSemester;
 
-      const previousSemester = localStorage.getItem("savedSemester");
-      if (previousSemester) document.getElementById("semSelect").value = previousSemester;
+  loadTeacherScript();
+  loadHolidayScript();
+  loadSemesterScript(); 
 
-      loadTeacherScript();
-      loadHolidayScript();
-      loadSemesterScript(); 
-
-      updateClock();
-      setInterval(updateClock, 1000);
-      setInterval(loadCurrentClass, 30000); 
-    });
+  updateClock();
+  setInterval(updateClock, 1000);
+  setInterval(loadCurrentClass, 30000); 
+});
   </script>
 </body>
 </html>
