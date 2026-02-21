@@ -712,6 +712,18 @@ footer .fa-heart {
       </div>
     </div>
 
+    <div class="pdf-item" style="border-left: 4px solid var(--holiday);">
+      <span class="pdf-title">Holiday List</span>
+      <div class="pdf-buttons">
+        <a id="hol-view-btn" href="#" target="_blank">
+          <i class="fas fa-eye"></i> View
+        </a>
+        <a id="hol-down-btn" href="#" download>
+          <i class="fas fa-download"></i> Download
+        </a>
+      </div>
+    </div>
+
 <h2>Telegram Links</h2>
 
   <div class="pdf-item telegram">
@@ -759,8 +771,6 @@ footer .fa-heart {
             <option value="4">SEM 4 Routine</option>
             <option value="5">SEM 5 Routine</option>
             <option value="6">SEM 6 Routine</option>
-
-
           </select> ▾ 🎀
         </h2>
       </div>
@@ -858,6 +868,7 @@ footer .fa-heart {
 
     const mathsPdfs = ["maths2025-I.pdf", "maths2025-II.pdf", "maths2026-I.pdf"];
     const physicsPdfs = ["physics2025-I.pdf", "physics2025-II.pdf", "physics2026-I.pdf"];
+    const holidayPdfs = ["holiday2025.pdf", "holiday2026.pdf"]; // NEW: Array for holiday PDFs
 
     // --- DYNAMIC SCRIPT LOADER ---
     function loadExternalScript(url, callback) {
@@ -882,6 +893,16 @@ footer .fa-heart {
         return { filename, year: parseInt(match[1]), sem: romanToNum[match[2].toUpperCase()] || 0 };
       };
       return files.map(parseFile).sort((a, b) => b.year !== a.year ? b.year - a.year : b.sem - a.sem)[0].filename; 
+    }
+
+    // NEW: Finding latest yearly PDF for Holidays
+    function getLatestYearlyPdf(files) {
+      if (!files || files.length === 0) return "#";
+      const parseFile = (filename) => {
+        const match = filename.match(/(\d{4})/);
+        return { filename, year: match ? parseInt(match[1]) : 0 };
+      };
+      return files.map(parseFile).sort((a, b) => b.year - a.year)[0].filename; 
     }
 
     // --- HELPER FUNCTIONS ---
@@ -941,16 +962,24 @@ footer .fa-heart {
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
       const now = new Date();
       const today = dayNames[now.getDay()];
-      document.getElementById("dayTitle").textContent = today;
+      
+      // NEW: Create a readable date string
+      const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+      const formattedToday = now.toLocaleDateString('en-GB', dateOptions);
+      
+      // Display Day + Date
+      document.getElementById("dayTitle").textContent = `${today} • ${formattedToday}`;
+      
       const routineBox = document.getElementById("routineBox");
       const container = document.getElementById("currentClass");
       container.innerHTML = "";
       
       if (!window.currentRoutineData || Object.keys(window.currentRoutineData).length === 0) return;
 
+      // HOLIDAY CHECK overrides everything
       if (isHoliday(now)) {
         routineBox.classList.add("holiday");
-        container.innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes Today</div>`;
+        container.innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes For Any Semester Today</div>`;
         return;
       } else {
         routineBox.classList.remove("holiday");
@@ -999,20 +1028,28 @@ footer .fa-heart {
       currentModalDay = dayNames[newIndex];
       loadRoutineForDay(currentModalDay);
     }
+    
     function loadRoutineForDay(day) {
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const dateDiff = dayNames.indexOf(day) - new Date().getDay();
+      const todayIndex = new Date().getDay();
+      const targetIndex = dayNames.indexOf(day);
+      
+      // Calculate the correct date for the modal
       const selectedDate = new Date();
+      const dateDiff = targetIndex - todayIndex;
       selectedDate.setDate(selectedDate.getDate() + dateDiff);
+      
+      const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+      const dateString = selectedDate.toLocaleDateString('en-GB', dateOptions);
       
       const container = document.getElementById("fullRoutine");
       container.innerHTML = "";
 
       if (isHoliday(selectedDate)) {
-        document.getElementById("modalDay").textContent = day + " - Holiday";
-        container.innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday</div>`;
+        document.getElementById("modalDay").textContent = `${day} (${dateString}) - Holiday`;
+        container.innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday. No classes.</div>`;
       } else {
-        document.getElementById("modalDay").textContent = day + " - Full Routine";
+        document.getElementById("modalDay").textContent = `${day} (${dateString})`;
         const dayRoutine = window.currentRoutineData[day];
         if (!dayRoutine || dayRoutine.length === 0) {
           container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
@@ -1133,8 +1170,11 @@ footer .fa-heart {
       // 1. Setup Smart PDF Links
       const latestMaths = getLatestPdf(mathsPdfs);
       const latestPhysics = getLatestPdf(physicsPdfs);
+      const latestHoliday = getLatestYearlyPdf(holidayPdfs); // NEW
+
       const mathUrl = `routine/maths/${latestMaths}`;
       const physUrl = `routine/physics/${latestPhysics}`;
+      const holUrl = `routine/holidays/${latestHoliday}`; // NEW
 
       // Override the "View" buttons to use the Smart Modal instead of new tab
       if(document.getElementById("math-view-btn")) {
@@ -1146,6 +1186,12 @@ footer .fa-heart {
         document.getElementById("phys-view-btn").href = "#";
         document.getElementById("phys-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(physUrl); };
         document.getElementById("phys-down-btn").href = physUrl;
+      }
+      // NEW: Apply modal to Holiday PDF button
+      if(document.getElementById("hol-view-btn")) {
+        document.getElementById("hol-view-btn").href = "#";
+        document.getElementById("hol-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(holUrl); };
+        document.getElementById("hol-down-btn").href = holUrl;
       }
 
       // 2. CHECK IF ANY PDF IS PINNED! 
@@ -1169,7 +1215,5 @@ footer .fa-heart {
       setInterval(loadCurrentClass, 30000); 
     });
   </script>
-
-
 </body>
 </html>
