@@ -10,34 +10,32 @@
 
 <style>
 :root {
-  /* Accents (Kept subtle) */
+  /* Accents */
   --primary: #8e76f8; 
   --primary-light: #f4f2ff;
   --secondary: #ff8fab; 
   --secondary-light: #fff5f7;
   
-  /* "Premium" Text Colors (Warmed up) */
-  --text: #1a1a1a; /* Dark, rich text */
-  --text-light: #615d59; /* Softer, warmer grey */
+  /* Text Colors */
+  --text: #1a1a1a; 
+  --text-light: #615d59; 
   
-  /* --- "Premium Warm Milk-White" Theme --- */
-  --background: linear-gradient(145deg, #fdfaf8, #FBF9F7); /* NEW: Warm "milk-white" */
-  
-  /* "Tactile" Solid Cards & Ultra-Soft Shadow */
-  --card-bg: #ffffff; /* NEW: Solid white, no glass */
-  --border-light: 1px solid #f0ebe8; /* NEW: Faint warm border */
-  --backdrop-blur: none; /* NEW: Removed glass effect */
-  --shadow: 0 12px 35px rgba(97, 85, 75, 0.06); /* NEW: Softer, warmer shadow */
+  /* Theme */
+  --background: linear-gradient(145deg, #fdfaf8, #FBF9F7); 
+  --card-bg: #ffffff; 
+  --border-light: 1px solid #f0ebe8; 
+  --backdrop-blur: none; 
+  --shadow: 0 12px 35px rgba(97, 85, 75, 0.06); 
   
   --transition: all 0.3s ease;
   
-  /* Supporting colors (Warmed up) */
+  /* PDF Items */
   --pdf-bg: #fff;
   --pdf-hover: #fcfaf9;
-  --pdf-border: #f4f1ef; /* NEW: Warm border for items */
+  --pdf-border: #f4f1ef; 
   --pdf-text: #4a4744;
 
-  /* Holiday/No-Class (Mostly kept, slightly tweaked) */
+  /* Holiday/No-Class */
   --holiday: #ff7675;
   --holiday-light: #fff9f9;
   --holiday-border: #ffefef;
@@ -47,11 +45,7 @@
 }
 
 /* Reset & Body */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -63,11 +57,11 @@ body {
   min-height: 100vh;
   padding: 20px;
   background-attachment: fixed;
-  -webkit-font-smoothing: antialiased; /* Smoother fonts */
+  -webkit-font-smoothing: antialiased; 
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- "Milky" Solid Sidebar --- */
+/* Sidebar */
 #sidebar-toggle { display: none; }
 
 .sidebar {
@@ -76,14 +70,14 @@ body {
   left: -300px;
   width: 300px;
   height: 100%;
-  background: #ffffff; /* Solid white */
+  background: #ffffff; 
   color: var(--text); 
   padding: 25px;
   transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   overflow-y: auto;
   z-index: 1000;
-  box-shadow: 8px 0 40px rgba(97, 85, 75, 0.05); /* NEW: Warmer shadow */
-  border-right: 1px solid var(--pdf-border); /* NEW: Faint warm border */
+  box-shadow: 8px 0 40px rgba(97, 85, 75, 0.05); 
+  border-right: 1px solid var(--pdf-border); 
 }
 
 .sidebar h2 {
@@ -107,21 +101,18 @@ body {
 }
 .sidebar label:hover { color: var(--primary); }
 
-#sidebar-toggle:checked ~ .sidebar {
-  left: 0;
-}
+#sidebar-toggle:checked ~ .sidebar { left: 0; }
 
-/* "Softer" PDF Items */
 .pdf-item {
   margin-bottom: 12px;
   background: var(--pdf-bg);
   padding: 12px;
-  border-radius: 12px; /* NEW: Softer 12px */
+  border-radius: 12px; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: 0.3s;
-  border: 1px solid var(--pdf-border); /* NEW: Using new variable */
+  border: 1px solid var(--pdf-border); 
 }
 
 .pdf-item:hover { 
@@ -152,8 +143,8 @@ body {
   color: var(--text);
   background: #fff;
   padding: 6px 10px;
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
-  border-radius: 8px; /* NEW: Softer 8px */
+  border: 1px solid var(--pdf-border); 
+  border-radius: 8px; 
   font-size: 0.85rem;
   display: inline-flex;
   align-items: center;
@@ -171,18 +162,13 @@ body {
   box-shadow: 0 4px 10px rgba(142, 118, 248, 0.2);
 }
 
-/* --- "Premium White" Main Container --- */
+/* Main Container */
 .container {
   max-width: 800px;
   width: 100%;
-  
-  /* "Tactile" Solid White Card Effect */
   background: var(--card-bg);
-  backdrop-filter: var(--backdrop-blur); /* 'none' from :root */
-  -webkit-backdrop-filter: var(--backdrop-blur);
   border: var(--border-light);
-  
-  border-radius: 24px; /* NEW: Sharper, more "premium" radius */
+  border-radius: 24px; 
   padding: 50px;
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -190,16 +176,14 @@ body {
   transition: var(--transition);
 }
 
-/* Decorative background shapes (even softer) */
-.container::before,
-.container::after {
+.container::before, .container::after {
   content: "";
   position: absolute;
   border-radius: 50%;
   z-index: -1;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  filter: blur(120px); /* NEW: Softer */
-  opacity: 0.08; /* NEW: More subtle */
+  filter: blur(120px); 
+  opacity: 0.08; 
 }
 
 .container::before { width: 200px; height: 200px; top: 0%; left: -10%; }
@@ -236,9 +220,7 @@ h1 span::after {
   transform-origin: center;
   transition: transform 0.3s ease;
 }
-h1 span:hover::after {
-  transform: scaleX(1);
-}
+h1 span:hover::after { transform: scaleX(1); }
 
 p { 
   color: var(--text-light); 
@@ -247,51 +229,36 @@ p {
   font-family: 'Inter', sans-serif;
 }
 
-/* "Softer" Buttons & Links */
-.quick-links {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
+/* Buttons */
+.quick-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
 
 .btn {
   padding: 14px 28px;
-  border-radius: 30px; /* Pill-like */
+  border-radius: 30px; 
   text-decoration: none;
   font-family: 'Inter', sans-serif;
-  font-weight: 500; /* NEW: 'Medium' is more premium than '600' */
-  font-size: 0.95rem; /* NEW: Slightly more refined */
+  font-weight: 500; 
+  font-size: 0.95rem; 
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1); /* NEW: Softer shadow */
+  box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1); 
   background: var(--primary);
   color: #fff;
-  border: 1px solid transparent; /* NEW: Cleaner border */
+  border: 1px solid transparent; 
 }
 
 .btn:hover {
   background: #fff;
   color: var(--primary);
   border-color: var(--primary);
-  transform: translateY(-2px); /* NEW: Softer lift */
-  box-shadow: 0 6px 16px rgba(142, 118, 248, 0.2); /* NEW: Softer "glow" */
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 16px rgba(142, 118, 248, 0.2); 
 }
+.btn:active { transform: translateY(-1px) scale(0.98); box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1); }
 
-/* NEW: Gentle scale animation on press */
-.btn:active {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 2px 8px rgba(142, 118, 248, 0.1);
-}
-
-.btn-secondary {
-  background: var(--secondary);
-  box-shadow: 0 2px 8px rgba(253, 121, 168, 0.1); /* NEW: Softer shadow */
-}
-
+.btn-secondary { background: var(--secondary); box-shadow: 0 2px 8px rgba(253, 121, 168, 0.1); }
 .btn-secondary:hover {
   background: #fff;
   color: var(--secondary);
@@ -300,7 +267,7 @@ p {
   box-shadow: 0 6px 16px rgba(253, 121, 168, 0.25);
 }
 
-/* --- "Premium Milky White" Grid Content & Cards --- */
+/* Cards */
 .content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -309,13 +276,11 @@ p {
 }
 
 .card {
-  /* Solid "tactile" white card */
   background: #ffffff;
-  border: 1px solid var(--border-light); /* NEW: Faint warm border */
-  
-  border-radius: 16px; /* NEW: Standard premium radius */
+  border: 1px solid var(--border-light); 
+  border-radius: 16px; 
   padding: 25px;
-  box-shadow: 0 4px 15px rgba(97, 85, 75, 0.04); /* NEW: Softer, warmer shadow */
+  box-shadow: 0 4px 15px rgba(97, 85, 75, 0.04); 
   transition: var(--transition);
   position: relative;
   text-align: center;
@@ -323,12 +288,11 @@ p {
 }
 
 .card:hover {
-  transform: translateY(-6px); /* NEW: Subtler lift */
-  box-shadow: 0 10px 25px rgba(97, 85, 75, 0.07); /* NEW: Warmer hover */
+  transform: translateY(-6px); 
+  box-shadow: 0 10px 25px rgba(97, 85, 75, 0.07); 
   border-color: #e9e4e1;
 }
 
-/* "Cute" gradient icon */
 .card-icon {
   width: 70px;
   height: 70px;
@@ -340,11 +304,10 @@ p {
   color: var(--primary);
   font-size: 28px;
   margin: 10px auto 20px auto;
-  box-shadow: 0 4px 10px rgba(142, 118, 248, 0.05); /* NEW: Softer shadow */
-  transition: all 0.3s ease-in-out; /* <-- UPDATED: Added transition */
+  box-shadow: 0 4px 10px rgba(142, 118, 248, 0.05); 
+  transition: all 0.3s ease-in-out; 
 }
 
-/* <-- NEW: Added playful hover effect for icon --> */
 .card:hover .card-icon {
   transform: scale(1.1) rotate(5deg);
   box-shadow: 0 8px 20px rgba(142, 118, 248, 0.15);
@@ -359,23 +322,11 @@ p {
   font-weight: 600;
 }
 
-.card:hover h3 {
-  color: var(--primary); /* Color changes on hover */
-}
+.card:hover h3 { color: var(--primary); }
+.card p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 20px; }
 
-.card p { 
-  font-size: 0.95rem; 
-  color: var(--text-light); 
-  margin-bottom: 20px; 
-}
-
-/* --- "Cute" Footer --- */
-footer { 
-  text-align: center; 
-  color: var(--text-light); 
-  font-size: 0.95rem; 
-  font-family: 'Inter', sans-serif;
-}
+/* Footer */
+footer { text-align: center; color: var(--text-light); font-size: 0.95rem; font-family: 'Inter', sans-serif; }
 footer .fa-heart {
   color: var(--secondary);
   margin: 0 2px;
@@ -388,7 +339,6 @@ footer .fa-heart {
   50% { transform: scale(1.3); }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .content { grid-template-columns: 1fr; }
   .quick-links { flex-direction: column; align-items: center; }
@@ -396,42 +346,36 @@ footer .fa-heart {
 }
 
 @media (max-width: 480px) {
-  .container { padding: 30px 20px; border-radius: 20px; } /* NEW */
+  .container { padding: 30px 20px; border-radius: 20px; } 
   h1 { font-size: 2rem; }
   p { font-size: 1rem; }
   .btn { padding: 12px 22px; }
   .card-icon { width: 60px; height: 60px; font-size: 24px; margin-bottom: 15px; }
 }
 
-/* --- "Premium White" Routine Box --- */
+/* Routine Box */
 .routine-box {
   width: 90%;
   max-width: 480px;          
-  background: #ffffff; /* NEW: Solid white */
-  border-radius: 16px; /* NEW: Standard 16px */      
+  background: #ffffff; 
+  border-radius: 16px;       
   padding: 28px 25px;        
   cursor: pointer;
   transition: all 0.35s ease-in-out;
   margin: 20px auto;
-  border: 1px solid var(--border-light); /* NEW: Faint warm border */
-  box-shadow: 0 10px 30px rgba(97, 85, 75, 0.05); /* NEW: Warmer, softer shadow */
+  border: 1px solid var(--border-light); 
+  box-shadow: 0 10px 30px rgba(97, 85, 75, 0.05); 
 }
 
 .routine-box:hover {
   transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 18px 45px rgba(142, 118, 248, 0.08); /* Kept purple glow */
+  box-shadow: 0 18px 45px rgba(142, 118, 248, 0.08); 
   border-color: #f4f1ef;
 }
 
-.routine-box.holiday {
-  background: var(--holiday-light);
-  border: 1px solid var(--holiday-border);
-}
-.routine-box.holiday:hover {
-  box-shadow: 0 14px 35px rgba(255, 118, 117, 0.1);
-}
+.routine-box.holiday { background: var(--holiday-light); border: 1px solid var(--holiday-border); }
+.routine-box.holiday:hover { box-shadow: 0 14px 35px rgba(255, 118, 117, 0.1); }
 
-/* Dropdown Styling */
 .sem-select { 
   font-family: 'Manrope', sans-serif; 
   font-size: 25px; 
@@ -447,11 +391,7 @@ footer .fa-heart {
   -webkit-appearance: none; 
   letter-spacing: 0.5px;
 }
-.sem-select-container { 
-  text-align: center; 
-  margin-bottom: 12px; 
-  position: relative; 
-}
+.sem-select-container { text-align: center; margin-bottom: 12px; position: relative; }
 .routine-box.holiday .sem-select { color: var(--holiday); }
 
 .clock {
@@ -473,9 +413,9 @@ footer .fa-heart {
 }
 
 .class-slot {
-  background: #fdfcfb; /* NEW: Very light warm background */
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
-  border-radius: 12px; /* NEW: 12px */
+  background: #fdfcfb; 
+  border: 1px solid var(--pdf-border); 
+  border-radius: 12px; 
   padding: 13px;
   margin-bottom: 11px;
   text-align: left;
@@ -486,7 +426,6 @@ footer .fa-heart {
   transition: 0.25s;
 }
 
-/* "Premium" Highlight Style */
 .highlight {
   background: linear-gradient(135deg, var(--primary), #a38fff) !important;
   border: none !important;
@@ -494,11 +433,7 @@ footer .fa-heart {
   box-shadow: 0 8px 20px rgba(142, 118, 248, 0.35);
   transform: scale(1.03);
 }
-
-.highlight .subject, .highlight .time {
-  color: #fff !important;
-  font-weight: 600;
-}
+.highlight .subject, .highlight .time { color: #fff !important; font-weight: 600; }
 
 .no-class {
   text-align: center;
@@ -506,7 +441,7 @@ footer .fa-heart {
   background: var(--no-class-bg);
   font-weight: 600;
   padding: 15px;
-  border-radius: 12px; /* NEW: 12px */
+  border-radius: 12px; 
   border: 1px solid var(--no-class-border);
   font-family: 'Inter', sans-serif;
 }
@@ -522,7 +457,7 @@ footer .fa-heart {
   font-family: 'Inter', sans-serif;
 }
 
-/* --- "Softer Milky" Modal --- */
+/* Modals */
 .modal {
   display: none;
   position: fixed;
@@ -531,11 +466,9 @@ footer .fa-heart {
   top: 0;
   width: 100%;
   height: 100%;
-  /* NEW: Lighter, "milky" backdrop WITHOUT blur */
   background: rgba(251, 249, 247, 0.6); 
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.3s ease;
@@ -544,35 +477,75 @@ footer .fa-heart {
 .modal-content {
   background: #fff;
   padding: 25px;
-  border-radius: 20px; /* NEW: 20px */
+  border-radius: 20px; 
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 15px 40px rgba(97, 85, 75, 0.1); /* NEW: Warmer, stronger shadow */
+  box-shadow: 0 15px 40px rgba(97, 85, 75, 0.1); 
   max-height: 80vh;
   overflow-y: auto;
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* UPDATED MODAL HEADER CSS */
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid var(--border-light);
+  position: relative; 
 }
 
 .modal-nav {
+  background: var(--primary-light);
+  padding: 6px 15px;
+  border-radius: 30px; 
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  align-items: center;
+  border: 1px solid #dbeafe;
+}
+
+.date-picker-input {
+  font-family: 'Manrope', sans-serif;
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+}
+
+.modal h3 { 
+  font-family: 'Manrope', sans-serif;
+  text-align: center; 
+  margin-bottom: 0;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.close-btn { 
+  position: absolute;
+  right: 0;
+  top: -5px;
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer; 
+  color: #aaa;
+  transition: var(--transition);
+  line-height: 1;
 }
 
 .nav-btn {
-  background: var(--primary-light);
-  border: 1px solid var(--primary);
+  background: transparent;
+  border: none;
   color: var(--primary);
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -582,57 +555,21 @@ footer .fa-heart {
   font-size: 16px;
 }
 
-.nav-btn:hover {
-  background: var(--primary);
-  color: white;
-  transform: scale(1.1);
-}
-
-.nav-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.nav-btn:disabled:hover {
-  background: var(--primary-light);
-  color: var(--primary);
-  transform: none;
-}
-
-.modal h3 { 
-  font-family: 'Manrope', sans-serif;
-  text-align: center; 
-  margin-bottom: 0;
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 1.4rem;
-  flex-grow: 1;
-}
-.close-btn { 
-  font-size: 28px;
-  font-weight: 300;
-  cursor: pointer; 
-  color: #aaa;
-  transition: var(--transition);
-  line-height: 1;
-}
-.close-btn:hover { color: var(--secondary); transform: rotate(90deg); }
+.nav-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nav-btn:disabled:hover { background: transparent; color: var(--primary); transform: none; }
 
 .full-slot {
-  background: #fdfcfb; /* NEW: Very light warm bg */
-  border: 1px solid var(--pdf-border); /* NEW: Use variable */
+  background: #fdfcfb; 
+  border: 1px solid var(--pdf-border); 
   margin-bottom: 8px;
   padding: 12px 15px;
-  border-radius: 10px; /* NEW: 10px */
+  border-radius: 10px; 
   font-size: 14.5px;
   transition: var(--transition);
-  font-family: 'Inter', sans-serif; /* NEW: Font */
+  font-family: 'Inter', sans-serif; 
 }
-.full-slot:hover {
-  border-color: var(--primary-light);
-  background: var(--primary-light);
-}
+.full-slot:hover { border-color: var(--primary-light); background: var(--primary-light); }
 
 .full-slot .time { font-weight: 600; color: #374151; }
 .full-slot .subject { margin-left: 8px; color: #1e40af; }
@@ -646,31 +583,18 @@ footer .fa-heart {
   border-bottom: 1px dotted #1e40af;
 }
 
-.teacher-link:hover { 
-  color: var(--primary); 
-  text-decoration: none; 
-  border-bottom-color: var(--primary);
-}
-.highlight .teacher-link { 
-  color: #fff !important; 
-  border-bottom: 1px dotted #fff;
-  font-weight: 600;
-}
-.highlight .teacher-link:hover { 
-  color: #dbeafe !important; 
-  border-bottom-color: #dbeafe;
-}
+.teacher-link:hover { color: var(--primary); text-decoration: none; border-bottom-color: var(--primary); }
+.highlight .teacher-link { color: #fff !important; border-bottom: 1px dotted #fff; font-weight: 600; }
+.highlight .teacher-link:hover { color: #dbeafe !important; border-bottom-color: #dbeafe; }
 
-/* Keyframes */
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 @keyframes slideUp { 
   from {transform: translateY(30px) scale(0.98); opacity: 0;} 
   to {transform: translateY(0) scale(1); opacity: 1;} 
 }
 
-/* Routine Box Responsive */
 @media (max-width: 600px) {
-  .routine-box { padding: 22px 18px; border-radius: 16px; } /* NEW */
+  .routine-box { padding: 22px 18px; border-radius: 16px; } 
   .sem-select { font-size: 21px; }
   .clock { font-size: 16.5px; }
   .day-title { font-size: 16px; }
@@ -782,12 +706,13 @@ footer .fa-heart {
     <div id="routineModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <h3 id="modalDay"></h3>
           <div class="modal-nav">
             <button class="nav-btn" onclick="navigateDay(-1)"><i class="fas fa-chevron-left"></i></button>
+            <input type="date" id="datePicker" class="date-picker-input" onchange="handleDatePick(this.value)">
             <button class="nav-btn" onclick="navigateDay(1)"><i class="fas fa-chevron-right"></i></button>
           </div>
-          <h3 id="modalDay"></h3>
-          <span class="close-btn" onclick="closeModal()">&times;</span>
         </div>
         <div id="fullRoutine"></div>
       </div>
@@ -796,16 +721,16 @@ footer .fa-heart {
 
     <div id="pdfModal" class="modal" style="z-index: 2000;">
       <div class="modal-content" style="max-width: 900px; height: 90vh; display: flex; flex-direction: column; padding: 15px; border-radius: 20px;">
-        <div class="modal-header" style="margin-bottom: 10px; padding-bottom: 10px;">
+        <div class="modal-header" style="margin-bottom: 10px; padding-bottom: 10px; display: flex; flex-direction: row; justify-content: space-between;">
           <div style="display: flex; align-items: center; gap: 15px;">
-            <button id="pinBtn" onclick="togglePin()" class="nav-btn" title="Pin this PDF" style="width: auto; padding: 0 15px; border-radius: 20px; font-weight: bold; font-family: 'Inter', sans-serif;">
+            <button id="pinBtn" onclick="togglePin()" class="nav-btn" title="Pin this PDF" style="width: auto; padding: 0 15px; border-radius: 20px; font-weight: bold; font-family: 'Inter', sans-serif; border: 1px solid var(--primary);">
               📌 <span id="pinText">Pin Routine</span>
             </button>
             <div id="pdfTimer" style="display: none; font-weight: 700; color: #e11d48; background: #ffe4e6; padding: 6px 12px; border-radius: 8px; font-family: 'Inter', sans-serif;">
               ⏳ STRICT LOCK: <span id="timeRemaining">03:00</span>
             </div>
           </div>
-          <span id="closePdfBtn" class="close-btn" onclick="closePdfModal()">&times;</span>
+          <span id="closePdfBtn" class="close-btn" style="position: relative; top: 0;" onclick="closePdfModal()">&times;</span>
         </div>
         <iframe id="pdfFrame" src="" style="flex-grow: 1; border: 2px dashed #f0ebe8; border-radius: 12px; background: #faf9f8;"></iframe>
       </div>
@@ -868,7 +793,7 @@ footer .fa-heart {
 
     const mathsPdfs = ["maths2025-I.pdf", "maths2025-II.pdf", "maths2026-I.pdf"];
     const physicsPdfs = ["physics2025-I.pdf", "physics2025-II.pdf", "physics2026-I.pdf"];
-    const holidayPdfs = ["holiday2025.pdf", "holiday2026.pdf"]; // NEW: Array for holiday PDFs
+    const holidayPdfs = ["holiday2025.pdf", "holiday2026.pdf"]; 
 
     // --- DYNAMIC SCRIPT LOADER ---
     function loadExternalScript(url, callback) {
@@ -895,7 +820,6 @@ footer .fa-heart {
       return files.map(parseFile).sort((a, b) => b.year !== a.year ? b.year - a.year : b.sem - a.sem)[0].filename; 
     }
 
-    // NEW: Finding latest yearly PDF for Holidays
     function getLatestYearlyPdf(files) {
       if (!files || files.length === 0) return "#";
       const parseFile = (filename) => {
@@ -954,7 +878,7 @@ footer .fa-heart {
           return;
         }
         loadCurrentClass(); 
-        if(document.getElementById("routineModal").style.display === "flex") loadRoutineForDay(currentModalDay);
+        if(document.getElementById("routineModal").style.display === "flex") loadRoutineForDate(currentSelectedDate);
       });
     }
 
@@ -963,11 +887,9 @@ footer .fa-heart {
       const now = new Date();
       const today = dayNames[now.getDay()];
       
-      // NEW: Create a readable date string
       const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
       const formattedToday = now.toLocaleDateString('en-GB', dateOptions);
       
-      // Display Day + Date
       document.getElementById("dayTitle").textContent = `${today} • ${formattedToday}`;
       
       const routineBox = document.getElementById("routineBox");
@@ -976,7 +898,6 @@ footer .fa-heart {
       
       if (!window.currentRoutineData || Object.keys(window.currentRoutineData).length === 0) return;
 
-      // HOLIDAY CHECK overrides everything
       if (isHoliday(now)) {
         routineBox.classList.add("holiday");
         container.innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes For Any Semester Today</div>`;
@@ -1007,50 +928,58 @@ footer .fa-heart {
       if (!found) container.innerHTML = `<div class="no-class">✅ No class right now</div>`;
     }
 
-    // --- ROUTINE MODAL LOGIC ---
-    let currentModalDay = "";
+    // --- UPDATED ROUTINE MODAL LOGIC WITH DATE OBJECTS ---
+    let currentSelectedDate = new Date();
+
     function openModal() {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      currentModalDay = dayNames[new Date().getDay()];
-      loadRoutineForDay(currentModalDay);
+      currentSelectedDate = new Date(); // Reset to today
+      loadRoutineForDate(currentSelectedDate);
       document.getElementById("routineModal").style.display = "flex";
       document.body.style.overflow = "hidden";
     }
+
     function closeModal() {
       document.getElementById("routineModal").style.display = "none";
       document.body.style.overflow = "auto";
     }
+
     function navigateDay(direction) {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      let newIndex = dayNames.indexOf(currentModalDay) + direction;
-      if (newIndex < 0) newIndex = 6;
-      if (newIndex > 6) newIndex = 0;
-      currentModalDay = dayNames[newIndex];
-      loadRoutineForDay(currentModalDay);
+      currentSelectedDate.setDate(currentSelectedDate.getDate() + direction);
+      loadRoutineForDate(currentSelectedDate);
+    }
+
+    // UPDATED: Added T00:00:00 to fix timezone shifts in IST when picking a date
+    function handleDatePick(dateString) {
+      if (!dateString) return;
+      currentSelectedDate = new Date(dateString + 'T00:00:00');
+      loadRoutineForDate(currentSelectedDate);
     }
     
-    function loadRoutineForDay(day) {
+    function loadRoutineForDate(dateObj) {
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const todayIndex = new Date().getDay();
-      const targetIndex = dayNames.indexOf(day);
+      const day = dayNames[dateObj.getDay()];
       
-      // Calculate the correct date for the modal
-      const selectedDate = new Date();
-      const dateDiff = targetIndex - todayIndex;
-      selectedDate.setDate(selectedDate.getDate() + dateDiff);
+      // 1. Sync Date Picker
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const dd = String(dateObj.getDate()).padStart(2, '0');
+      document.getElementById("datePicker").value = `${yyyy}-${mm}-${dd}`;
       
+      // 2. Format readable string
       const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
-      const dateString = selectedDate.toLocaleDateString('en-GB', dateOptions);
+      const dateString = dateObj.toLocaleDateString('en-GB', dateOptions);
       
       const container = document.getElementById("fullRoutine");
       container.innerHTML = "";
 
-      if (isHoliday(selectedDate)) {
+      // 3. Holiday Check
+      if (isHoliday(dateObj)) {
         document.getElementById("modalDay").textContent = `${day} (${dateString}) - Holiday`;
         container.innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday. No classes.</div>`;
       } else {
         document.getElementById("modalDay").textContent = `${day} (${dateString})`;
         const dayRoutine = window.currentRoutineData[day];
+        
         if (!dayRoutine || dayRoutine.length === 0) {
           container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
         } else {
@@ -1073,12 +1002,11 @@ footer .fa-heart {
       currentPdfUrl = url;
       document.getElementById("pdfFrame").src = url;
       document.getElementById("pdfModal").style.display = "flex";
-      document.body.style.overflow = "hidden"; // Block background scroll
+      document.body.style.overflow = "hidden"; 
 
       const pinBtn = document.getElementById("pinBtn");
       const pinText = document.getElementById("pinText");
       
-      // Update Pin Button UI
       if (localStorage.getItem("pinnedPdfUrl") === url) {
         pinBtn.style.background = "var(--primary)";
         pinBtn.style.color = "white";
@@ -1090,15 +1018,14 @@ footer .fa-heart {
       }
 
       if (isAutoLock) {
-        // STRICT MODE: 3 Minutes Lock
         const closeBtn = document.getElementById("closePdfBtn");
         const timerUI = document.getElementById("pdfTimer");
         const timeText = document.getElementById("timeRemaining");
         
-        closeBtn.style.display = "none"; // Hide Close Button!
+        closeBtn.style.display = "none"; 
         timerUI.style.display = "block";
         
-        let timeLeft = 180; // 180 seconds = 3 minutes
+        let timeLeft = 180; 
         
         lockTimerInterval = setInterval(() => {
           timeLeft--;
@@ -1108,7 +1035,7 @@ footer .fa-heart {
           
           if (timeLeft <= 0) {
             clearInterval(lockTimerInterval);
-            closeBtn.style.display = "block"; // Unlock!
+            closeBtn.style.display = "block"; 
             timerUI.innerHTML = "✅ Unlocked! Good job.";
             timerUI.style.background = "#d1fae5";
             timerUI.style.color = "#059669";
@@ -1117,11 +1044,9 @@ footer .fa-heart {
         }, 1000);
 
       } else {
-        // NORMAL VIEW MODE (Manual Open)
         document.getElementById("closePdfBtn").style.display = "block";
         document.getElementById("pdfTimer").style.display = "none";
         
-        // Show Toast Popup once per view
         const toast = document.getElementById("toastPopup");
         toast.style.display = "block";
         setTimeout(() => { toast.style.display = "none"; }, 6000);
@@ -1130,7 +1055,7 @@ footer .fa-heart {
 
     function closePdfModal() {
       document.getElementById("pdfModal").style.display = "none";
-      document.getElementById("pdfFrame").src = ""; // Clear iframe memory
+      document.getElementById("pdfFrame").src = ""; 
       document.body.style.overflow = "auto";
       if(lockTimerInterval) clearInterval(lockTimerInterval);
     }
@@ -1140,14 +1065,12 @@ footer .fa-heart {
       const pinText = document.getElementById("pinText");
 
       if (localStorage.getItem("pinnedPdfUrl") === currentPdfUrl) {
-        // UNPIN IT
         localStorage.removeItem("pinnedPdfUrl");
         pinBtn.style.background = "var(--primary-light)";
         pinBtn.style.color = "var(--primary)";
         pinText.innerText = "Pin Routine";
         alert("✅ Unpinned! Main page will open normally next time.");
       } else {
-        // PIN IT
         localStorage.setItem("pinnedPdfUrl", currentPdfUrl);
         pinBtn.style.background = "var(--primary)";
         pinBtn.style.color = "white";
@@ -1156,10 +1079,8 @@ footer .fa-heart {
       }
     }
 
-    // Close modals if clicking outside content
     window.onclick = (e) => { 
       if(e.target === document.getElementById("routineModal")) closeModal(); 
-      // Do NOT allow clicking outside to close PDF modal if locked!
       if(e.target === document.getElementById("pdfModal") && document.getElementById("closePdfBtn").style.display !== "none") {
         closePdfModal();
       }
@@ -1167,16 +1088,14 @@ footer .fa-heart {
 
     // --- INIT ---
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Setup Smart PDF Links
       const latestMaths = getLatestPdf(mathsPdfs);
       const latestPhysics = getLatestPdf(physicsPdfs);
-      const latestHoliday = getLatestYearlyPdf(holidayPdfs); // NEW
+      const latestHoliday = getLatestYearlyPdf(holidayPdfs); 
 
       const mathUrl = `routine/maths/${latestMaths}`;
       const physUrl = `routine/physics/${latestPhysics}`;
-      const holUrl = `routine/holidays/${latestHoliday}`; // NEW
+      const holUrl = `routine/holidays/${latestHoliday}`; 
 
-      // Override the "View" buttons to use the Smart Modal instead of new tab
       if(document.getElementById("math-view-btn")) {
         document.getElementById("math-view-btn").href = "#";
         document.getElementById("math-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(mathUrl); };
@@ -1187,25 +1106,20 @@ footer .fa-heart {
         document.getElementById("phys-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(physUrl); };
         document.getElementById("phys-down-btn").href = physUrl;
       }
-      // NEW: Apply modal to Holiday PDF button
       if(document.getElementById("hol-view-btn")) {
         document.getElementById("hol-view-btn").href = "#";
         document.getElementById("hol-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(holUrl); };
         document.getElementById("hol-down-btn").href = holUrl;
       }
 
-      // 2. CHECK IF ANY PDF IS PINNED! 
       const pinnedPdf = localStorage.getItem("pinnedPdfUrl");
       if (pinnedPdf) {
-        // Auto-open with STRICT LOCK = true
         openPdfModal(pinnedPdf, true);
       }
 
-      // 3. Load saved semester
       const previousSemester = localStorage.getItem("savedSemester");
       if (previousSemester) document.getElementById("semSelect").value = previousSemester;
 
-      // 4. Load Scripts
       loadTeacherScript();
       loadHolidayScript();
       loadSemesterScript(); 
