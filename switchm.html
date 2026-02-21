@@ -6,7 +6,6 @@
   <title>APCRGC Personal Hub</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -432,19 +431,28 @@ footer .fa-heart {
   box-shadow: 0 14px 35px rgba(255, 118, 117, 0.1);
 }
 
-.routine-box h2 {
-  font-family: 'Manrope', sans-serif;
-  text-align: center;
-  font-size: 25px;
-  margin-bottom: 12px;
-  color: #1e293b;
-  font-weight: 700;
+/* Dropdown Styling */
+.sem-select { 
+  font-family: 'Manrope', sans-serif; 
+  font-size: 25px; 
+  font-weight: 700; 
+  border: none; 
+  background: transparent; 
+  cursor: pointer; 
+  color: #1e293b; 
+  outline: none; 
+  text-align: center; 
+  text-align-last: center; 
+  appearance: none; 
+  -webkit-appearance: none; 
   letter-spacing: 0.5px;
 }
-
-.routine-box.holiday h2 {
-  color: var(--holiday);
+.sem-select-container { 
+  text-align: center; 
+  margin-bottom: 12px; 
+  position: relative; 
 }
+.routine-box.holiday .sem-select { color: var(--holiday); }
 
 .clock {
   font-family: 'Inter', sans-serif;
@@ -663,12 +671,11 @@ footer .fa-heart {
 /* Routine Box Responsive */
 @media (max-width: 600px) {
   .routine-box { padding: 22px 18px; border-radius: 16px; } /* NEW */
-  .routine-box h2 { font-size: 21px; }
+  .sem-select { font-size: 21px; }
   .clock { font-size: 16.5px; }
   .day-title { font-size: 16px; }
   .class-slot { font-size: 14px; padding: 11px; }
 }
-
 </style>
 
 </head>
@@ -684,10 +691,10 @@ footer .fa-heart {
     <div class="pdf-item">
       <span class="pdf-title">Physics Routine</span>
       <div class="pdf-buttons">
-        <a href="routine/Physics_Routine_July-Dec_2025.pdf" target="_blank">
+        <a id="phys-view-btn" href="#" target="_blank">
           <i class="fas fa-eye"></i> View
         </a>
-        <a href="routine/Physics_Routine_July-Dec_2025.pdf" download>
+        <a id="phys-down-btn" href="#" download>
           <i class="fas fa-download"></i> Download
         </a>
       </div>
@@ -696,10 +703,10 @@ footer .fa-heart {
     <div class="pdf-item">
       <span class="pdf-title">Maths Routine</span>
       <div class="pdf-buttons">
-        <a href="routine/Mathematics_Odd Sem, 25-26.pdf" target="_blank">
+        <a id="math-view-btn" href="#" target="_blank">
           <i class="fas fa-eye"></i> View
         </a>
-        <a href="routine/Mathematics_Odd Sem, 25-26.pdf" download>
+        <a id="math-down-btn" href="#" download>
           <i class="fas fa-download"></i> Download
         </a>
       </div>
@@ -727,7 +734,6 @@ footer .fa-heart {
 
   </div>
 
-
   <div class="container">
     <div class="header">
       <h1>Welcome to My APCRGC <span onclick="document.getElementById('sidebar-toggle').click();">Hub</span></h1>
@@ -744,7 +750,20 @@ footer .fa-heart {
     </div>
 
     <div class="routine-box" id="routineBox" onclick="openModal()">
-      <h2>📘 SEM 1 Routine</h2>
+      <div class="sem-select-container" onclick="event.stopPropagation();">
+        <h2>📘 
+          <select id="semSelect" class="sem-select" onchange="loadSemesterScript()">
+            <option value="1">SEM 1 Routine</option>
+            <option value="2">SEM 2 Routine</option>
+            <option value="3">SEM 3 Routine</option>
+            <option value="4">SEM 4 Routine</option>
+            <option value="5">SEM 5 Routine</option>
+            <option value="6">SEM 6 Routine</option>
+
+
+          </select> ▾ 🎀
+        </h2>
+      </div>
       <div class="clock" id="clock">--:-- --</div>
       <div class="day-title" id="dayTitle">Loading...</div>
       <div id="currentClass">Please wait...</div>
@@ -754,12 +773,8 @@ footer .fa-heart {
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-nav">
-            <button class="nav-btn" id="prevDayBtn" onclick="navigateDay(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="nav-btn" id="nextDayBtn" onclick="navigateDay(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
+            <button class="nav-btn" onclick="navigateDay(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn" onclick="navigateDay(1)"><i class="fas fa-chevron-right"></i></button>
           </div>
           <h3 id="modalDay"></h3>
           <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -767,6 +782,30 @@ footer .fa-heart {
         <div id="fullRoutine"></div>
       </div>
     </div>
+
+
+    <div id="pdfModal" class="modal" style="z-index: 2000;">
+      <div class="modal-content" style="max-width: 900px; height: 90vh; display: flex; flex-direction: column; padding: 15px; border-radius: 20px;">
+        <div class="modal-header" style="margin-bottom: 10px; padding-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <button id="pinBtn" onclick="togglePin()" class="nav-btn" title="Pin this PDF" style="width: auto; padding: 0 15px; border-radius: 20px; font-weight: bold; font-family: 'Inter', sans-serif;">
+              📌 <span id="pinText">Pin Routine</span>
+            </button>
+            <div id="pdfTimer" style="display: none; font-weight: 700; color: #e11d48; background: #ffe4e6; padding: 6px 12px; border-radius: 8px; font-family: 'Inter', sans-serif;">
+              ⏳ STRICT LOCK: <span id="timeRemaining">03:00</span>
+            </div>
+          </div>
+          <span id="closePdfBtn" class="close-btn" onclick="closePdfModal()">&times;</span>
+        </div>
+        <iframe id="pdfFrame" src="" style="flex-grow: 1; border: 2px dashed #f0ebe8; border-radius: 12px; background: #faf9f8;"></iframe>
+      </div>
+    </div>
+
+    <div id="toastPopup" style="display: none; position: fixed; bottom: 30px; right: 30px; background: #ffffff; padding: 18px 25px; border-radius: 12px; box-shadow: 0 15px 40px rgba(142,118,248,0.2); border-left: 5px solid var(--primary); z-index: 3000; font-family: 'Inter', sans-serif; font-weight: 500; color: var(--text); max-width: 350px; animation: slideUp 0.4s ease;">
+      📌 <b>Smart Pin Feature:</b><br>
+      <span style="font-size: 0.9rem; color: var(--text-light);">Pin this PDF to auto-open it next time you visit. <br><span style="color: #e11d48; font-weight:600;">Warning:</span> You will be strictly locked to it for 3 minutes!</span>
+    </div>
+
 
     <div class="content">
       <div class="card">
@@ -809,211 +848,93 @@ footer .fa-heart {
   </div>
 
   <script>
-    // Teacher URLs mapping - each teacher has their own unique link
-    const teacherURLs = {
-      "Dr. Md Hasanujjaman": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Koustuv Roy": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Supriya Chatterjee": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Ikbal Mandal": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Mr. Hirujit Ghosh": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Ms. Nilanjana Nandi": "http://www.apcrgc.org/dept-of-physics-our-departments.html",
-      "Dr. Nivedita Chatterjee": "  "
-    };
+    // --- GLOBAL VARIABLES ---
+    window.currentRoutineData = {}; 
+    window.holidaysList = [];       
+    window.teacherURLs = {}; 
 
-    // Holiday list for 2025 (from the PDF)
-    const holidays2025 = [
-      "01/01/2025", // New Year's Day
-      "14/01/2025", // Makar Sankranti
-      "23/01/2025", // Birthday of Netaji
-      "03/02/2025", // Day after Saraswati Puja
-      "14/02/2025", // Birthday of Thakur Panchanan Barma and Shab-e-Barat
-      "26/02/2025", // Maha Shivaratri
-      "14/03/2025", // Doljatra & Holi
-      "15/03/2025", // Day after Doljatra
-      "27/03/2025", // Birthday of Shri Shri Harichand Thakur
-      "31/03/2025", // Eid-ul-Fitar
-      "01/04/2025", // Day after Eid-ul-Fitar
-      "10/04/2025", // Mahavir Jayanti
-      "14/04/2025", // Birthday of Dr. B.R. Ambedkar
-      "15/04/2025", // Bengali New Year's Day
-      "18/04/2025", // Good Friday
-      "01/05/2025", // May Day
-      // Summer Vacation: 05/05/2025 to 27/06/2025 (46 days)
-      "27/06/2025", // Rathayatra
-      "21/07/2025", // College Foundation Day
-      "02/08/2025", // Birthday of Acharya Prafulla Chandra Roy
-      "09/08/2025", // Rakhi Bandhan
-      "15/08/2025", // Independence Day & Janmashtami
-      "05/09/2025", // Fateha-Dwaz-Daham
-      "17/09/2025", // Viswakarma Puja
-      // Puja Vacation: 22/09/2025 to 05/11/2025 (39 days)
-      // Winter Vacation: 25/12/2025 to 31/12/2025 (6 days)
-      "31/12/2025"  // Principal's Discretion
-    ];
+    const currentYear = new Date().getFullYear(); 
+    const academicSession = "2025-2026"; 
 
-    // Add all summer vacation days
-    const addSummerVacationDays = () => {
-      const startDate = new Date("05/05/2025");
-      const endDate = new Date("06/27/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
+    const mathsPdfs = ["maths2025-I.pdf", "maths2025-II.pdf", "maths2026-I.pdf"];
+    const physicsPdfs = ["physics2025-I.pdf", "physics2025-II.pdf", "physics2026-I.pdf"];
 
-    // Add all puja vacation days
-    const addPujaVacationDays = () => {
-      const startDate = new Date("09/22/2025");
-      const endDate = new Date("11/05/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
+    // --- DYNAMIC SCRIPT LOADER ---
+    function loadExternalScript(url, callback) {
+      let existingScript = document.getElementById("dyn-script-" + url);
+      if (existingScript) existingScript.remove(); 
 
-    // Add all winter vacation days
-    const addWinterVacationDays = () => {
-      const startDate = new Date("12/25/2025");
-      const endDate = new Date("12/31/2025");
-      let currentDate = new Date(startDate);
-      
-      while (currentDate <= endDate) {
-        const dateString = formatDate(currentDate);
-        if (!holidays2025.includes(dateString)) {
-          holidays2025.push(dateString);
-        }
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-    };
+      let script = document.createElement("script");
+      script.id = "dyn-script-" + url;
+      script.src = url;
+      script.onload = () => { if (callback) callback(true); };
+      script.onerror = () => { if (callback) callback(false); };
+      document.head.appendChild(script);
+    }
 
-    // Format date as MM/DD/YYYY
+    // --- LATEST PDF FINDER ---
+    function getLatestPdf(files) {
+      if (!files || files.length === 0) return "#";
+      const parseFile = (filename) => {
+        const match = filename.match(/(\d{4})-(I|II|III|IV|V|VI|VII|VIII|IX|X)/i);
+        if (!match) return { filename, year: 0, sem: 0 };
+        const romanToNum = { "I":1, "II":2, "III":3, "IV":4, "V":5, "VI":6, "VII":7, "VIII":8, "IX":9, "X":10 };
+        return { filename, year: parseInt(match[1]), sem: romanToNum[match[2].toUpperCase()] || 0 };
+      };
+      return files.map(parseFile).sort((a, b) => b.year !== a.year ? b.year - a.year : b.sem - a.sem)[0].filename; 
+    }
+
+    // --- HELPER FUNCTIONS ---
     const formatDate = (date) => {
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
-      const year = date.getFullYear();
-      return `${month}/${day}/${year}`;
+      return `${month}/${day}/${date.getFullYear()}`;
     };
-
-    // Initialize holiday list with vacation periods
-    addSummerVacationDays();
-    addPujaVacationDays();
-    addWinterVacationDays();
-
-    // Check if today is a holiday
-    const isHoliday = () => {
-      const today = new Date();
-      
-      // *** DEBUGGING: Uncomment to test holiday
-      // const todayString = "11/04/2025"; // Test Puja vacation
-      // return holidays2025.includes(todayString);
-      
-      const todayString = formatDate(today);
-      return holidays2025.includes(todayString);
-    };
-
-    // Helper: Convert 24hr string (HH:MM) to 12hr format
-    function to12Hour(time) {
-      let [h, m] = time.split(":").map(Number);
-      const ampm = h >= 12 ? "PM" : "AM";
-      h = h % 12;
-      h = h ? h : 12;
-      return `${h}:${m.toString().padStart(2,"0")} ${ampm}`;
-    }
-
-    // Process subject text to make teacher names clickable
+    const isHoliday = (dateObj = new Date()) => window.holidaysList.includes(formatDate(dateObj));
+    const timeToMinutes = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+    const to12Hour = (time) => { let [h, m] = time.split(":").map(Number); const ampm = h >= 12 ? "PM" : "AM"; return `${h % 12 || 12}:${m.toString().padStart(2,"0")} ${ampm}`; };
+    
     function processSubjectText(text) {
-      // Create a copy of the text to work with
       let processedText = text;
-      
-      // Replace each teacher name with a clickable link
-      Object.keys(teacherURLs).forEach(teacher => {
-        const regex = new RegExp(teacher, 'g');
-        processedText = processedText.replace(
-          regex, 
-          `<span class="teacher-link" onclick="event.stopPropagation(); window.open('${teacherURLs[teacher]}', '_blank')">${teacher}</span>`
-        );
-      });
-      
+      if (window.teacherURLs && Object.keys(window.teacherURLs).length > 0) {
+        Object.keys(window.teacherURLs).forEach(teacher => {
+          const regex = new RegExp(teacher, 'g');
+          processedText = processedText.replace(regex, `<span class="teacher-link" onclick="event.stopPropagation(); window.open('${window.teacherURLs[teacher]}', '_blank')">${teacher}</span>`);
+        });
+      }
       return processedText;
-    }
-
-    // SEM 1 full week routine with teacher names
-    const routine = {
-      "MON": [
-        { start: "10:30", end: "11:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Dr. Md Hasanujjaman" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:00", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC - Dr. Md Hasanujjaman" },
-        { start: "04:00", end: "05:00", subject: "SEC - Dr. Koustuv Roy" }
-      ],
-      "TUE": [
-        { start: "10:30", end: "11:30", subject: "MIN1 - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "MIN1 - Dr. Supriya Chatterjee" },
-        { start: "12:30", end: "01:30", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 Practical - Mr. Ikbal Mandal" },
-        { start: "03:00", end: "04:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 Practical - Mr. Ikbal Mandal & Dr. Md Hasanujjaman" }
-      ],
-      "WED": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "MIN1 - Mr. Ikbal Mandal" },
-        { start: "01:30", end: "02:00", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "03:00", end: "04:00", subject: "No classes" },
-        { start: "04:00", end: "05:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-      ],
-      "THU": [
-        { start: "10:30", end: "11:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "11:30", end: "12:30", subject: "MIN1 Practical - Mr. Ikbal Mandal & Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "Recess Hour" },
-        { start: "02:00", end: "03:00", subject: "MAJ1 - Dr. Koustuv Roy" },
-        { start: "03:00", end: "04:00", subject: "MAJ2 - Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "MAJ2 - Dr. Supriya Chatterjee" }
-      ],
-      "FRI": [
-        { start: "10:30", end: "11:30", subject: "MAJ1 - Mr. Ikbal Mandal" },
-        { start: "11:30", end: "12:30", subject: "MAJ2 - Mr. Hirujit Ghosh" },
-        { start: "12:30", end: "01:30", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "02:20", end: "03:00", subject: "VAC - Dr. Nivedita Chatterjee" },
-        { start: "03:00", end: "04:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" },
-        { start: "04:00", end: "05:00", subject: "SEC Practical - Mr. Hirujit Ghosh & Dr. Supriya Chatterjee" }
-      ],
-      "SAT": [
-        { start: "10:30", end: "11:30", subject: "Remedial Class - Dr. Md Hasanujjaman" },
-        { start: "11:30", end: "12:30", subject: "Remedial Class - Mr. Ikbal Mandal" },
-        { start: "12:30", end: "01:30", subject: "Remedial Class - Mr. Hirujit Ghosh" },
-        { start: "02:00", end: "03:00", subject: "Tutorial - Ms. Nilanjana Nandi" }
-      ]
-    };
-
-    // Global variable to track current day in modal
-    let currentModalDay = "";
-
-    function timeToMinutes(t) {
-      const [h, m] = t.split(":").map(Number);
-      return h * 60 + m;
     }
 
     function updateClock() {
       const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      document.getElementById("clock").textContent = `${hours}:${minutes} ${ampm}`;
+      document.getElementById("clock").textContent = to12Hour(`${now.getHours()}:${now.getMinutes()}`);
+    }
+
+    // --- TRIGGER DATA LOADS ---
+    function loadTeacherScript() {
+      loadExternalScript(`scripts/teachers.js`, () => {
+        if(Object.keys(window.currentRoutineData).length > 0) loadCurrentClass();
+      });
+    }
+
+    function loadHolidayScript() {
+      loadExternalScript(`scripts/${currentYear}/${currentYear}holiday.js`, () => {});
+    }
+
+    function loadSemesterScript() {
+      const semNumber = document.getElementById("semSelect").value;
+      localStorage.setItem("savedSemester", semNumber);
+      const scriptUrl = `scripts/${currentYear}/${academicSession}/sem${semNumber}.js`;
+      window.currentRoutineData = {}; 
+
+      loadExternalScript(scriptUrl, (success) => {
+        if (!success) {
+          document.getElementById("currentClass").innerHTML = `<div class="no-class" style="color:red; border-color:red; background:#fff5f5;">⚠️ Error: ${scriptUrl} missing!</div>`;
+          return;
+        }
+        loadCurrentClass(); 
+        if(document.getElementById("routineModal").style.display === "flex") loadRoutineForDay(currentModalDay);
+      });
     }
 
     function loadCurrentClass() {
@@ -1021,24 +942,23 @@ footer .fa-heart {
       const now = new Date();
       const today = dayNames[now.getDay()];
       document.getElementById("dayTitle").textContent = today;
-
       const routineBox = document.getElementById("routineBox");
+      const container = document.getElementById("currentClass");
+      container.innerHTML = "";
       
-      // Check if today is a holiday
-      if (isHoliday()) {
+      if (!window.currentRoutineData || Object.keys(window.currentRoutineData).length === 0) return;
+
+      if (isHoliday(now)) {
         routineBox.classList.add("holiday");
-        document.getElementById("currentClass").innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes Today</div>`;
+        container.innerHTML = `<div class="holiday-class">🎉 Holiday - No Classes Today</div>`;
         return;
       } else {
         routineBox.classList.remove("holiday");
       }
 
-      const todayRoutine = routine[today];
-      const container = document.getElementById("currentClass");
-      container.innerHTML = "";
-
-      if (!todayRoutine) {
-        container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
+      const todayRoutine = window.currentRoutineData[today];
+      if (!todayRoutine || todayRoutine.length === 0) {
+        container.innerHTML = `<div class="no-class">✅ No Classes Scheduled Today</div>`;
         return;
       }
 
@@ -1046,8 +966,7 @@ footer .fa-heart {
       let found = false;
 
       todayRoutine.forEach(slot => {
-        if (currentMinutes >= timeToMinutes(slot.start) &&
-            currentMinutes < timeToMinutes(slot.end)) {
+        if (currentMinutes >= timeToMinutes(slot.start) && currentMinutes < timeToMinutes(slot.end)) {
           const div = document.createElement("div");
           div.className = "class-slot highlight";
           div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
@@ -1056,130 +975,201 @@ footer .fa-heart {
           found = true;
         }
       });
-
-      if (!found) {
-        container.innerHTML = `<div class="no-class">✅ No class right now</div>`;
-      }
+      if (!found) container.innerHTML = `<div class="no-class">✅ No class right now</div>`;
     }
 
+    // --- ROUTINE MODAL LOGIC ---
+    let currentModalDay = "";
     function openModal() {
-      const now = new Date();
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const today = dayNames[now.getDay()];
-      
-      // Set current modal day to today
-      currentModalDay = today;
-      
-      // Update navigation buttons
-      updateNavButtons();
-      
-      // Load routine for current day
-      loadRoutineForDay(today);
-      
-      // Show modal
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "flex";
-
-      // Prevent body scroll while modal is open
+      currentModalDay = dayNames[new Date().getDay()];
+      loadRoutineForDay(currentModalDay);
+      document.getElementById("routineModal").style.display = "flex";
       document.body.style.overflow = "hidden";
     }
-
     function closeModal() {
-      const modal = document.getElementById("routineModal");
-      modal.style.display = "none";
-      document.body.style.overflow = "auto"; // restore scroll
+      document.getElementById("routineModal").style.display = "none";
+      document.body.style.overflow = "auto";
     }
-
     function navigateDay(direction) {
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const currentIndex = dayNames.indexOf(currentModalDay);
-      let newIndex = currentIndex + direction;
-      
-      // Handle wrap-around
+      let newIndex = dayNames.indexOf(currentModalDay) + direction;
       if (newIndex < 0) newIndex = 6;
       if (newIndex > 6) newIndex = 0;
-      
       currentModalDay = dayNames[newIndex];
-      updateNavButtons();
       loadRoutineForDay(currentModalDay);
     }
-
-    function updateNavButtons() {
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const currentIndex = dayNames.indexOf(currentModalDay);
-      
-      // Update button states
-      document.getElementById("prevDayBtn").disabled = false;
-      document.getElementById("nextDayBtn").disabled = false;
-      
-      // You can add logic here to disable buttons if needed
-      // For example, if you don't want to navigate to Sunday
-      // if (currentIndex === 0) {
-      //   document.getElementById("prevDayBtn").disabled = true;
-      // }
-      // if (currentIndex === 6) {
-      //   document.getElementById("nextDayBtn").disabled = true;
-      // }
-    }
-
     function loadRoutineForDay(day) {
-      // Check if the day is a holiday
-      const now = new Date();
       const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const todayIndex = dayNames.indexOf(day);
-      const currentIndex = dayNames.indexOf(dayNames[now.getDay()]);
-      
-      // Calculate date for the selected day
-      const dateDiff = todayIndex - currentIndex;
+      const dateDiff = dayNames.indexOf(day) - new Date().getDay();
       const selectedDate = new Date();
       selectedDate.setDate(selectedDate.getDate() + dateDiff);
-      const selectedDateString = formatDate(selectedDate);
       
-      const isDayHoliday = holidays2025.includes(selectedDateString);
-      
-      if (isDayHoliday) {
-        document.getElementById("modalDay").textContent = day + " - Holiday (No Classes)";
-        document.getElementById("fullRoutine").innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday - No Classes Scheduled</div>`;
+      const container = document.getElementById("fullRoutine");
+      container.innerHTML = "";
+
+      if (isHoliday(selectedDate)) {
+        document.getElementById("modalDay").textContent = day + " - Holiday";
+        container.innerHTML = `<div class="holiday-class">🎉 ${day} is a holiday</div>`;
       } else {
         document.getElementById("modalDay").textContent = day + " - Full Routine";
-
-        const dayRoutine = routine[day];
-        const container = document.getElementById("fullRoutine");
-        container.innerHTML = "";
-
+        const dayRoutine = window.currentRoutineData[day];
         if (!dayRoutine || dayRoutine.length === 0) {
           container.innerHTML = `<div class="no-class">✅ No Classes Scheduled</div>`;
         } else {
           dayRoutine.forEach(slot => {
             const div = document.createElement("div");
             div.className = "full-slot";
-            
-            // Handle 'No classes' or 'Recess Hour' specially
-            const subjectText = slot.subject.toLowerCase().includes("no class") || slot.subject.toLowerCase().includes("recess")
-                                ? slot.subject
-                                : processSubjectText(slot.subject);
-
             div.innerHTML = `<span class="time">${to12Hour(slot.start)} - ${to12Hour(slot.end)}</span>
-                             <span class="subject">${subjectText}</span>`;
+                             <span class="subject">${processSubjectText(slot.subject)}</span>`;
             container.appendChild(div);
           });
         }
       }
     }
 
-    // Close modal when clicking outside content
-    window.onclick = function(event) {
-      const modal = document.getElementById("routineModal");
-      if (event.target === modal) {
-        closeModal();
+    // --- 📌 SMART PDF PIN & STRICT LOCK LOGIC ---
+    let currentPdfUrl = "";
+    let lockTimerInterval = null;
+
+    function openPdfModal(url, isAutoLock = false) {
+      currentPdfUrl = url;
+      document.getElementById("pdfFrame").src = url;
+      document.getElementById("pdfModal").style.display = "flex";
+      document.body.style.overflow = "hidden"; // Block background scroll
+
+      const pinBtn = document.getElementById("pinBtn");
+      const pinText = document.getElementById("pinText");
+      
+      // Update Pin Button UI
+      if (localStorage.getItem("pinnedPdfUrl") === url) {
+        pinBtn.style.background = "var(--primary)";
+        pinBtn.style.color = "white";
+        pinText.innerText = "Pinned";
+      } else {
+        pinBtn.style.background = "var(--primary-light)";
+        pinBtn.style.color = "var(--primary)";
+        pinText.innerText = "Pin Routine";
+      }
+
+      if (isAutoLock) {
+        // STRICT MODE: 3 Minutes Lock
+        const closeBtn = document.getElementById("closePdfBtn");
+        const timerUI = document.getElementById("pdfTimer");
+        const timeText = document.getElementById("timeRemaining");
+        
+        closeBtn.style.display = "none"; // Hide Close Button!
+        timerUI.style.display = "block";
+        
+        let timeLeft = 180; // 180 seconds = 3 minutes
+        
+        lockTimerInterval = setInterval(() => {
+          timeLeft--;
+          let m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+          let s = (timeLeft % 60).toString().padStart(2, '0');
+          timeText.innerText = `${m}:${s}`;
+          
+          if (timeLeft <= 0) {
+            clearInterval(lockTimerInterval);
+            closeBtn.style.display = "block"; // Unlock!
+            timerUI.innerHTML = "✅ Unlocked! Good job.";
+            timerUI.style.background = "#d1fae5";
+            timerUI.style.color = "#059669";
+            setTimeout(() => { timerUI.style.display = "none"; }, 4000);
+          }
+        }, 1000);
+
+      } else {
+        // NORMAL VIEW MODE (Manual Open)
+        document.getElementById("closePdfBtn").style.display = "block";
+        document.getElementById("pdfTimer").style.display = "none";
+        
+        // Show Toast Popup once per view
+        const toast = document.getElementById("toastPopup");
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 6000);
       }
     }
 
-    // Initialize
-    updateClock();
-    loadCurrentClass();
-    setInterval(updateClock, 1000);
-    setInterval(loadCurrentClass, 30000); // Update every 30 seconds
+    function closePdfModal() {
+      document.getElementById("pdfModal").style.display = "none";
+      document.getElementById("pdfFrame").src = ""; // Clear iframe memory
+      document.body.style.overflow = "auto";
+      if(lockTimerInterval) clearInterval(lockTimerInterval);
+    }
+
+    function togglePin() {
+      const pinBtn = document.getElementById("pinBtn");
+      const pinText = document.getElementById("pinText");
+
+      if (localStorage.getItem("pinnedPdfUrl") === currentPdfUrl) {
+        // UNPIN IT
+        localStorage.removeItem("pinnedPdfUrl");
+        pinBtn.style.background = "var(--primary-light)";
+        pinBtn.style.color = "var(--primary)";
+        pinText.innerText = "Pin Routine";
+        alert("✅ Unpinned! Main page will open normally next time.");
+      } else {
+        // PIN IT
+        localStorage.setItem("pinnedPdfUrl", currentPdfUrl);
+        pinBtn.style.background = "var(--primary)";
+        pinBtn.style.color = "white";
+        pinText.innerText = "Pinned";
+        alert("📌 Warning: Routine Pinned! \n\nNext time you visit this Hub, you will be strictly locked to this PDF for 3 minutes. Focus!");
+      }
+    }
+
+    // Close modals if clicking outside content
+    window.onclick = (e) => { 
+      if(e.target === document.getElementById("routineModal")) closeModal(); 
+      // Do NOT allow clicking outside to close PDF modal if locked!
+      if(e.target === document.getElementById("pdfModal") && document.getElementById("closePdfBtn").style.display !== "none") {
+        closePdfModal();
+      }
+    };
+
+    // --- INIT ---
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Setup Smart PDF Links
+      const latestMaths = getLatestPdf(mathsPdfs);
+      const latestPhysics = getLatestPdf(physicsPdfs);
+      const mathUrl = `routine/maths/${latestMaths}`;
+      const physUrl = `routine/physics/${latestPhysics}`;
+
+      // Override the "View" buttons to use the Smart Modal instead of new tab
+      if(document.getElementById("math-view-btn")) {
+        document.getElementById("math-view-btn").href = "#";
+        document.getElementById("math-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(mathUrl); };
+        document.getElementById("math-down-btn").href = mathUrl;
+      }
+      if(document.getElementById("phys-view-btn")) {
+        document.getElementById("phys-view-btn").href = "#";
+        document.getElementById("phys-view-btn").onclick = (e) => { e.preventDefault(); openPdfModal(physUrl); };
+        document.getElementById("phys-down-btn").href = physUrl;
+      }
+
+      // 2. CHECK IF ANY PDF IS PINNED! 
+      const pinnedPdf = localStorage.getItem("pinnedPdfUrl");
+      if (pinnedPdf) {
+        // Auto-open with STRICT LOCK = true
+        openPdfModal(pinnedPdf, true);
+      }
+
+      // 3. Load saved semester
+      const previousSemester = localStorage.getItem("savedSemester");
+      if (previousSemester) document.getElementById("semSelect").value = previousSemester;
+
+      // 4. Load Scripts
+      loadTeacherScript();
+      loadHolidayScript();
+      loadSemesterScript(); 
+
+      updateClock();
+      setInterval(updateClock, 1000);
+      setInterval(loadCurrentClass, 30000); 
+    });
   </script>
+
+
 </body>
 </html>
