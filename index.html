@@ -600,6 +600,31 @@ footer .fa-heart {
   .day-title { font-size: 16px; }
   .class-slot { font-size: 14px; padding: 11px; }
 }
+
+/* Registration Link */
+.reg-link {
+  display: block;
+  text-align: center;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  border: 1px dashed var(--primary);
+  transition: var(--transition);
+}
+
+.reg-link:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(142, 118, 248, 0.2);
+}
+
 </style>
 
 </head>
@@ -607,11 +632,14 @@ footer .fa-heart {
 
   <input type="checkbox" id="sidebar-toggle">
 
-  <div class="sidebar">
+<div class="sidebar">
     <label for="sidebar-toggle"><i class="fas fa-times"></i> Close</label>
 
     <h2>Class Routine</h2>
 
+    <a href="https://novakyr1.github.io/apcrgc-portfolio/i2025-26students.html" target="_blank" class="reg-link">
+      <i class="fas fa-id-card"></i> Know Your Registration
+    </a>
     <div class="pdf-item">
       <span class="pdf-title">Physics Routine</span>
       <div class="pdf-buttons">
